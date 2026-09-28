@@ -60,6 +60,11 @@
         <junit.version>5.10.2</junit.version>
         <mockito.version>5.11.0</mockito.version>
         <wiremock.version>3.5.4</wiremock.version>
+
+        <!-- API-first code generation: models/interfaces are generated FROM contracts/*.yaml, never hand-duplicated -->
+        <openapi-generator-maven-plugin.version>7.11.0</openapi-generator-maven-plugin.version>
+        <swagger-models.version>2.2.22</swagger-models.version>
+        <swagger-annotations.version>2.2.22</swagger-annotations.version>
     </properties>
 
     <dependencyManagement>
@@ -138,6 +143,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>${maven-source-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>${openapi-generator-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

@@ -10,7 +10,7 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost:8081
+  - url: http://localhost:8080
     description: Local development server
 tags:
   - name: Customers
@@ -131,19 +131,21 @@ components:
       properties:
         success: { type: boolean }
         data:
-          type: object
-          properties:
-            content:
-              type: array
-              items:
-                $ref: '#/components/schemas/Customer'
-            pagination:
-              $ref: '#/components/schemas/Pagination'
+          $ref: '#/components/schemas/CustomerPage'
         error:
           nullable: true
           $ref: '#/components/schemas/ApiError'
         metadata:
           $ref: '#/components/schemas/ApiMetadata'
+    CustomerPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     ErrorEnvelope:
       type: object
       properties:
@@ -164,11 +166,14 @@ components:
         details:
           type: array
           items:
-            type: object
-            properties:
-              field: { type: string }
-              code: { type: string }
-              message: { type: string }
+            $ref: '#/components/schemas/ApiErrorDetail'
+    ApiErrorDetail:
+      type: object
+      properties:
+        field: { type: string }
+        code: { type: string }
+        message: { type: string }
+        rejectedValue: { nullable: true }
     ApiMetadata:
       type: object
       properties:

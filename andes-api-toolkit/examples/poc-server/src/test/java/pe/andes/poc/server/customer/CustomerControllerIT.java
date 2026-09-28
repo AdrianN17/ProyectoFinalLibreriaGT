@@ -7,6 +7,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pe.andes.poc.server.generated.model.CustomerRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +22,7 @@ class CustomerControllerIT {
 
     @Test
     void createAndFetchCustomerRoundTrip() {
-        CustomerRequest request = new CustomerRequest("Ada Lovelace", "ada@example.com");
+        CustomerRequest request = new CustomerRequest().fullName("Ada Lovelace").email("ada@example.com");
 
         ResponseEntity<String> createResponse =
                 restTemplate.postForEntity(url("/api/v1/customers"), request, String.class);
@@ -38,7 +39,7 @@ class CustomerControllerIT {
 
     @Test
     void invalidCustomerReturnsValidationError() {
-        CustomerRequest invalid = new CustomerRequest("ab", "not-an-email");
+        CustomerRequest invalid = new CustomerRequest().fullName("ab").email("not-an-email");
         ResponseEntity<String> response = restTemplate.postForEntity(url("/api/v1/customers"), invalid, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
     }

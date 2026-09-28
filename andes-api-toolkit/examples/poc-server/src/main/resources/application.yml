@@ -12,7 +12,10 @@ andes:
         enabled: true
         generate-if-missing: true
       response:
-        wrap-enabled: true
+        # The generated CustomersApi controller already returns the full Andes envelope
+        # (CustomerEnvelope/CustomerPageEnvelope), so auto-wrapping must stay OFF here to
+        # avoid double-wrapping the response body.
+        wrap-enabled: false
       error-handling:
         enabled: true
         include-stack-trace: false

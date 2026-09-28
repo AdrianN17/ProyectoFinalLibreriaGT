@@ -4,16 +4,19 @@ import org.springframework.stereotype.Service;
 import pe.andes.api.common.exception.AndesConflictException;
 import pe.andes.api.common.exception.AndesNotFoundException;
 import pe.andes.api.common.model.PageResponse;
+import pe.andes.poc.server.generated.model.Customer;
+import pe.andes.poc.server.generated.model.CustomerRequest;
 
-import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * In-memory Customer repository/service, kept intentionally simple: the goal of this
- * PoC is to demonstrate andes-api-server, not a persistence layer.
+ * In-memory Customer repository/service. {@code Customer}/{@code CustomerRequest} are
+ * generated from {@code contracts/openapi-server.yaml} (API-first): this class only
+ * implements business logic, never redefines the resource shape by hand.
  */
 @Service
 public class CustomerService {
@@ -23,7 +26,7 @@ public class CustomerService {
 
     public PageResponse<Customer> list(int page, int size) {
         List<Customer> all = customers.values().stream()
-                .sorted((a, b) -> Long.compare(a.id(), b.id()))
+                .sorted((a, b) -> Long.compare(a.getId(), b.getId()))
                 .toList();
         int from = Math.min(page * size, all.size());
         int to = Math.min(from + size, all.size());
@@ -40,12 +43,16 @@ public class CustomerService {
 
     public Customer create(CustomerRequest request) {
         boolean emailTaken = customers.values().stream()
-                .anyMatch(c -> c.email().equalsIgnoreCase(request.email()));
+                .anyMatch(c -> c.getEmail().equalsIgnoreCase(request.getEmail()));
         if (emailTaken) {
-            throw new AndesConflictException("Email already registered: " + request.email());
+            throw new AndesConflictException("Email already registered: " + request.getEmail());
         }
         long id = idSequence.incrementAndGet();
-        Customer customer = new Customer(id, request.fullName(), request.email(), Instant.now());
+        Customer customer = new Customer()
+                .id(id)
+                .fullName(request.getFullName())
+                .email(request.getEmail())
+                .createdAt(OffsetDateTime.now());
         customers.put(id, customer);
         return customer;
     }
@@ -56,3 +63,4 @@ public class CustomerService {
         }
     }
 }
+

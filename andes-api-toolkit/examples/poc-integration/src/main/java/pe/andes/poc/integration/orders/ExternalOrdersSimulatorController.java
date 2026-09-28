@@ -3,8 +3,9 @@ package pe.andes.poc.integration.orders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pe.andes.poc.integration.generated.orders.model.CreateOrderRequest;
+import pe.andes.poc.integration.generated.orders.model.Order;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -32,11 +33,17 @@ public class ExternalOrdersSimulatorController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody CheckoutRequest request) {
+    public ResponseEntity<Order> createOrder(@RequestBody CreateOrderRequest request) {
         String orderId = "ORD-" + sequence.incrementAndGet();
-        double total = request.items().stream().mapToDouble(i -> i.unitPrice() * i.quantity()).sum();
-        Order order = new Order(orderId, request.customerId(), total, "PENDING", request.items());
+        double total = request.getItems().stream().mapToDouble(i -> i.getUnitPrice() * i.getQuantity()).sum();
+        Order order = new Order()
+                .orderId(orderId)
+                .customerId(request.getCustomerId())
+                .totalAmount(total)
+                .status(Order.StatusEnum.PENDING)
+                .items(request.getItems());
         orders.put(orderId, order);
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 }
+

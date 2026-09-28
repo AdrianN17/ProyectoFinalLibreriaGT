@@ -11,7 +11,9 @@ andes:
       correlation:
         enabled: true
       response:
-        wrap-enabled: true
+        # The generated CheckoutsApi controller already returns the full Andes envelope
+        # (CheckoutEnvelope), so auto-wrapping must stay OFF here to avoid double-wrapping.
+        wrap-enabled: false
       error-handling:
         enabled: true
       openapi:

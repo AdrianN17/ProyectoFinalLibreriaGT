@@ -7,6 +7,8 @@ import pe.andes.api.common.exception.AndesApiException;
 import pe.andes.api.common.model.ApiResponse;
 import pe.andes.api.common.util.ApiResponseUtils;
 import pe.andes.api.common.util.ErrorUtils;
+import pe.andes.poc.client.generated.orders.model.CreateOrderRequest;
+import pe.andes.poc.client.generated.orders.model.Order;
 
 /**
  * Demo entry point exercising {@link OrderClientService}. Since this PoC does not use

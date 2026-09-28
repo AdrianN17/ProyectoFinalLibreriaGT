@@ -16,10 +16,6 @@
     <name>Andes API Server</name>
     <description>Componentes para estandarizar request/response/error handling y documentacion OpenAPI de APIs REST expuestas con Spring Boot.</description>
 
-    <properties>
-        <swagger-models.version>2.2.22</swagger-models.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>pe.andes.api</groupId>
