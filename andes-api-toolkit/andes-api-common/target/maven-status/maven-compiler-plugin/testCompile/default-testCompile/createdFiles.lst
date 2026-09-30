@@ -1,0 +1,7 @@
+pe/andes/api/common/util/JsonUtilsTest.class
+pe/andes/api/common/model/ApiResponseTest.class
+pe/andes/api/common/util/JsonUtilsTest$Sample.class
+pe/andes/api/common/util/ErrorUtilsTest.class
+pe/andes/api/common/util/HeaderUtilsTest.class
+pe/andes/api/common/model/PageResponseTest.class
+pe/andes/api/common/util/ValidationUtilsTest.class

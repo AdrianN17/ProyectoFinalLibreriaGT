@@ -1,0 +1,15 @@
+pe/andes/api/server/config/AndesServerProperties$License.class
+pe/andes/api/server/config/AndesServerProperties$TagInfo.class
+pe/andes/api/server/config/AndesServerProperties$ErrorHandling.class
+pe/andes/api/server/config/AndesServerProperties$SecuritySchemeInfo.class
+pe/andes/api/server/web/AndesResponseBodyAdvice.class
+pe/andes/api/server/error/AndesExceptionMapper.class
+pe/andes/api/server/config/AndesServerProperties$Contact.class
+pe/andes/api/server/config/AndesServerProperties$OpenApi.class
+pe/andes/api/server/web/CorrelationIdFilter.class
+pe/andes/api/server/config/AndesServerProperties$ServerInfo.class
+pe/andes/api/server/config/AndesServerProperties.class
+pe/andes/api/server/openapi/AndesOpenApiFactory.class
+pe/andes/api/server/config/AndesServerProperties$Response.class
+pe/andes/api/server/config/AndesServerProperties$Correlation.class
+pe/andes/api/server/error/GlobalExceptionHandler.class

@@ -1,0 +1,14 @@
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/src/main/java/pe/andes/poc/server/PocServerApplication.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/src/main/java/pe/andes/poc/server/customer/CustomerApiDelegateImpl.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/src/main/java/pe/andes/poc/server/customer/CustomerService.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/RFC3339DateFormat.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/api/ApiUtil.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/api/CustomersApi.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/api/CustomersApiController.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/api/CustomersApiDelegate.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/model/Customer.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/model/CustomerEnvelope.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/model/CustomerPage.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/model/CustomerPageEnvelope.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/model/CustomerRequest.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-server/target/generated-sources/openapi/src/main/java/pe/andes/poc/server/generated/model/ErrorEnvelope.java

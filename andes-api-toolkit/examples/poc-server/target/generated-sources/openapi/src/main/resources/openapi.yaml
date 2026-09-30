@@ -1,0 +1,426 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: support@andes.pe
+    name: Andes API Toolkit Team
+  description: API propia expuesta por el PoC Server. Gestiona clientes (customers).
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  title: Andes Customer API
+  version: 1.0.0
+servers:
+- description: Local development server
+  url: http://localhost:8080
+tags:
+- description: Operations about customers
+  name: Customers
+paths:
+  /api/v1/customers:
+    get:
+      operationId: listCustomers
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerPageEnvelope'
+          description: Page of customers
+      summary: List customers (paginated)
+      tags:
+      - Customers
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Customers
+    post:
+      operationId: createCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEnvelope'
+          description: Created customer
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+          description: Validation error
+      summary: Create a new customer
+      tags:
+      - Customers
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Customers
+  /api/v1/customers/{id}:
+    delete:
+      operationId: deleteCustomer
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+          description: Customer not found
+      summary: Delete a customer
+      tags:
+      - Customers
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Customers
+    get:
+      operationId: getCustomerById
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEnvelope'
+          description: Customer found
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+          description: Customer not found
+      summary: Get a customer by id
+      tags:
+      - Customers
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Customers
+components:
+  schemas:
+    Customer:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        fullName: fullName
+        id: 0
+        email: email
+      properties:
+        id:
+          format: int64
+          type: integer
+        fullName:
+          type: string
+        email:
+          format: email
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    CustomerRequest:
+      example:
+        fullName: fullName
+        email: email
+      properties:
+        fullName:
+          minLength: 3
+          type: string
+        email:
+          format: email
+          type: string
+      required:
+      - email
+      - fullName
+      type: object
+    CustomerEnvelope:
+      description: Standard Andes ApiResponse envelope wrapping a single Customer
+      example:
+        metadata:
+          traceId: traceId
+          apiVersion: apiVersion
+          requestId: requestId
+          correlationId: correlationId
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        data:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          fullName: fullName
+          id: 0
+          email: email
+        success: true
+        error:
+          traceId: traceId
+          code: code
+          httpStatus: 2
+          details:
+          - code: code
+            field: field
+            message: message
+            rejectedValue: ""
+          - code: code
+            field: field
+            message: message
+            rejectedValue: ""
+          message: message
+          timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Customer'
+        error:
+          $ref: '#/components/schemas/ApiError'
+        metadata:
+          $ref: '#/components/schemas/ApiMetadata'
+      type: object
+    CustomerPageEnvelope:
+      example:
+        metadata:
+          traceId: traceId
+          apiVersion: apiVersion
+          requestId: requestId
+          correlationId: correlationId
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        data:
+          pagination:
+            size: 1
+            last: true
+            totalPages: 5
+            page: 6
+            first: true
+            totalElements: 5
+          content:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            fullName: fullName
+            id: 0
+            email: email
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            fullName: fullName
+            id: 0
+            email: email
+        success: true
+        error:
+          traceId: traceId
+          code: code
+          httpStatus: 2
+          details:
+          - code: code
+            field: field
+            message: message
+            rejectedValue: ""
+          - code: code
+            field: field
+            message: message
+            rejectedValue: ""
+          message: message
+          timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/CustomerPage'
+        error:
+          $ref: '#/components/schemas/ApiError'
+        metadata:
+          $ref: '#/components/schemas/ApiMetadata'
+      type: object
+    CustomerPage:
+      example:
+        pagination:
+          size: 1
+          last: true
+          totalPages: 5
+          page: 6
+          first: true
+          totalElements: 5
+        content:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          fullName: fullName
+          id: 0
+          email: email
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          fullName: fullName
+          id: 0
+          email: email
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/Customer'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      type: object
+    ErrorEnvelope:
+      example:
+        metadata:
+          traceId: traceId
+          apiVersion: apiVersion
+          requestId: requestId
+          correlationId: correlationId
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        data: ""
+        success: false
+        error:
+          traceId: traceId
+          code: code
+          httpStatus: 2
+          details:
+          - code: code
+            field: field
+            message: message
+            rejectedValue: ""
+          - code: code
+            field: field
+            message: message
+            rejectedValue: ""
+          message: message
+          timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        success:
+          example: false
+          type: boolean
+        data:
+          nullable: true
+        error:
+          $ref: '#/components/schemas/ApiError'
+        metadata:
+          $ref: '#/components/schemas/ApiMetadata'
+      type: object
+    ApiError:
+      example:
+        traceId: traceId
+        code: code
+        httpStatus: 2
+        details:
+        - code: code
+          field: field
+          message: message
+          rejectedValue: ""
+        - code: code
+          field: field
+          message: message
+          rejectedValue: ""
+        message: message
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        httpStatus:
+          type: integer
+        traceId:
+          type: string
+        timestamp:
+          format: date-time
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/ApiErrorDetail'
+          type: array
+      type: object
+    ApiErrorDetail:
+      example:
+        code: code
+        field: field
+        message: message
+        rejectedValue: ""
+      properties:
+        field:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        rejectedValue:
+          nullable: true
+      type: object
+    ApiMetadata:
+      example:
+        traceId: traceId
+        apiVersion: apiVersion
+        requestId: requestId
+        correlationId: correlationId
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        traceId:
+          type: string
+        correlationId:
+          type: string
+        requestId:
+          type: string
+        apiVersion:
+          type: string
+        timestamp:
+          format: date-time
+          type: string
+      type: object
+    Pagination:
+      example:
+        size: 1
+        last: true
+        totalPages: 5
+        page: 6
+        first: true
+        totalElements: 5
+      properties:
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          type: integer
+        first:
+          type: boolean
+        last:
+          type: boolean
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http

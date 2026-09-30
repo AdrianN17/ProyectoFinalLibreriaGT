@@ -1,0 +1,16 @@
+pe/andes/poc/server/customer/CustomerApiDelegateImpl.class
+pe/andes/poc/server/customer/CustomerService.class
+pe/andes/poc/server/generated/RFC3339DateFormat.class
+pe/andes/poc/server/generated/model/CustomerPage.class
+pe/andes/poc/server/generated/api/CustomersApiController.class
+pe/andes/poc/server/generated/api/CustomersApiController$1.class
+pe/andes/poc/server/generated/model/Customer.class
+pe/andes/poc/server/generated/model/ErrorEnvelope.class
+pe/andes/poc/server/generated/api/CustomersApiDelegate.class
+pe/andes/poc/server/generated/api/CustomersApi$1.class
+pe/andes/poc/server/generated/model/CustomerPageEnvelope.class
+pe/andes/poc/server/generated/model/CustomerEnvelope.class
+pe/andes/poc/server/generated/api/ApiUtil.class
+pe/andes/poc/server/PocServerApplication.class
+pe/andes/poc/server/generated/model/CustomerRequest.class
+pe/andes/poc/server/generated/api/CustomersApi.class

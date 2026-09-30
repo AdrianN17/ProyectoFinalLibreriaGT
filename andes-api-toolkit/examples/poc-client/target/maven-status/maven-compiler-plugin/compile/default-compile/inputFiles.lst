@@ -1,0 +1,12 @@
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/PocClientApplication.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/orders/ExternalOrdersSimulatorController.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/orders/OrderClientService.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/orders/OrdersDemoController.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/inventory/model/InventoryFault.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/inventory/model/InventoryFaultFault.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/inventory/model/StockLevel.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/inventory/model/StockSearchResult.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/orders/model/CreateOrderRequest.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/orders/model/Order.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/orders/model/OrderItem.java
+/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/examples/poc-client/target/generated-sources/openapi/src/main/java/pe/andes/poc/client/generated/orders/model/PartnerError.java

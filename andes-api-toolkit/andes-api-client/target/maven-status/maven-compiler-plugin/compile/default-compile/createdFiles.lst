@@ -1,0 +1,8 @@
+pe/andes/api/client/web/AndesClientHeaderInterceptor.class
+pe/andes/api/client/web/AndesRestClientFactory.class
+pe/andes/api/client/error/AndesClientErrorMapper.class
+pe/andes/api/client/config/AndesClientProperties$ClientConfig.class
+pe/andes/api/client/config/AndesClientProperties.class
+pe/andes/api/client/web/AndesRestClientCustomizer.class
+pe/andes/api/client/AndesApiClient.class
+pe/andes/api/client/AndesApiClientRegistry.class
