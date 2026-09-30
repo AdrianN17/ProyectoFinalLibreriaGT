@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="poc-server" />
+        <module name="poc-integration" />
+        <module name="andes-api-server" />
+        <module name="andes-api-server-spring-boot-starter" />
+        <module name="poc-client" />
+        <module name="andes-api-client" />
+        <module name="andes-api-client-spring-boot-starter" />
+        <module name="andes-api-common" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="andes-api-client" options="-parameters" />
+      <module name="andes-api-client-spring-boot-starter" options="-parameters" />
+      <module name="andes-api-common" options="-parameters" />
+      <module name="andes-api-server" options="-parameters" />
+      <module name="andes-api-server-spring-boot-starter" options="-parameters" />
+      <module name="andes-api-toolkit" options="-parameters" />
+      <module name="poc-client" options="-parameters" />
+      <module name="poc-integration" options="-parameters" />
+      <module name="poc-server" options="-parameters" />
+    </option>
+  </component>
+</project>

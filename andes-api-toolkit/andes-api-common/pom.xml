@@ -26,6 +26,13 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+        <!-- Required so Jackson can deserialize immutable models (e.g. ApiError) via their
+             all-args constructor using -parameters-preserved parameter names, without needing
+             explicit @JsonCreator/@JsonProperty annotations on every model. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

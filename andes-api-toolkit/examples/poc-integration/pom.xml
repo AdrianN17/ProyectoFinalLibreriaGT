@@ -89,16 +89,18 @@
                             <generateModelTests>false</generateModelTests>
                             <generateApiDocumentation>false</generateApiDocumentation>
                             <generateModelDocumentation>false</generateModelDocumentation>
+                            <!-- ApiError/ApiErrorDetail/ApiMetadata are hand-written in andes-api-common;
+                                 importMappings redirects generated code to those classes, and modelsToGenerate
+                                 stops the generator from also emitting its own (conflicting) copies. -->
+                            <modelsToGenerate>CheckoutItem,CheckoutRequest,CheckoutResult,CheckoutEnvelope,ErrorEnvelope</modelsToGenerate>
+                            <!-- Skip the generator's own Application/HomeController/test/POM supporting files:
+                                 poc-integration already has its own PocIntegrationApplication main class. -->
+                            <supportingFilesToGenerate>ApiUtil.java,RFC3339DateFormat.java,openapi.yaml</supportingFilesToGenerate>
                             <importMappings>
-                                <ApiError>pe.andes.api.common.model.ApiError</ApiError>
-                                <ApiErrorDetail>pe.andes.api.common.model.ApiErrorDetail</ApiErrorDetail>
-                                <ApiMetadata>pe.andes.api.common.model.ApiMetadata</ApiMetadata>
+                                <importMapping>ApiError=pe.andes.api.common.model.ApiError</importMapping>
+                                <importMapping>ApiErrorDetail=pe.andes.api.common.model.ApiErrorDetail</importMapping>
+                                <importMapping>ApiMetadata=pe.andes.api.common.model.ApiMetadata</importMapping>
                             </importMappings>
-                            <schemaMappings>
-                                <ApiError>pe.andes.api.common.model.ApiError</ApiError>
-                                <ApiErrorDetail>pe.andes.api.common.model.ApiErrorDetail</ApiErrorDetail>
-                                <ApiMetadata>pe.andes.api.common.model.ApiMetadata</ApiMetadata>
-                            </schemaMappings>
                             <configOptions>
                                 <interfaceOnly>false</interfaceOnly>
                                 <delegatePattern>true</delegatePattern>
@@ -129,6 +131,7 @@
                             <invokerPackage>pe.andes.poc.integration.generated.orders</invokerPackage>
                             <configOptions>
                                 <useBeanValidation>false</useBeanValidation>
+                                <useSpringBoot3>true</useSpringBoot3>
                                 <openApiNullable>false</openApiNullable>
                                 <documentationProvider>none</documentationProvider>
                             </configOptions>

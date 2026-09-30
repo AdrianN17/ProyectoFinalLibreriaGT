@@ -4,8 +4,8 @@ Esta guía describe el orden recomendado para trabajar con `andes-api-toolkit`, 
 
 Todos los comandos se ejecutan desde la raíz del proyecto:
 
-```powershell
-cd C:\Users\adria\OneDrive\Escritorio\ProyectoLibreriaGT\andes-api-toolkit
+```bash
+cd /mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit
 ```
 
 ## 1. Requisitos
@@ -19,7 +19,7 @@ El proyecto requiere:
 
 Comprobar las versiones:
 
-```powershell
+```bash
 java -version
 mvn -version
 ```
@@ -42,16 +42,16 @@ Los contratos OpenAPI ubicados en `contracts/` se utilizan durante la fase `gene
 
 Para generar únicamente el código de los contratos:
 
-```powershell
+```bash
 mvn -q clean generate-sources -pl examples/poc-server,examples/poc-client,examples/poc-integration
 ```
 
 Para revisar los resultados:
 
-```powershell
-Get-ChildItem examples\poc-server\target\generated-sources\openapi
-Get-ChildItem examples\poc-client\target\generated-sources\openapi
-Get-ChildItem examples\poc-integration\target\generated-sources\openapi
+```bash
+ls examples/poc-server/target/generated-sources/openapi
+ls examples/poc-client/target/generated-sources/openapi
+ls examples/poc-integration/target/generated-sources/openapi
 ```
 
 Si cambia un archivo YAML, se debe volver a ejecutar esta fase antes de probar o empaquetar.
@@ -62,7 +62,7 @@ Si cambia un archivo YAML, se debe volver a ejecutar esta fase antes de probar o
 
 Genera las fuentes y compila todos los módulos sin ejecutar las pruebas:
 
-```powershell
+```bash
 mvn -q -DskipTests clean package
 ```
 
@@ -72,20 +72,20 @@ Esta opción sirve para comprobar rápidamente que el código y el codegen compi
 
 Ejecuta las pruebas, genera los reportes de JaCoCo y crea los JAR:
 
-```powershell
+```bash
 mvn clean verify
 ```
 
 La publicación debe detenerse si este comando falla. Para ejecutar las pruebas de un módulo concreto:
 
-```powershell
+```bash
 mvn -pl andes-api-common test
 mvn -pl andes-api-client test
 ```
 
 Para incluir las dependencias internas necesarias al probar un módulo:
 
-```powershell
+```bash
 mvn -pl examples/poc-integration -am test
 ```
 
@@ -99,7 +99,7 @@ Cada aplicación se ejecuta en una terminal separada. El comando se lanza desde 
 
 Puerto `8080`, contrato `contracts/openapi-server.yaml`:
 
-```powershell
+```bash
 mvn -pl examples/poc-server spring-boot:run
 ```
 
@@ -107,7 +107,7 @@ mvn -pl examples/poc-server spring-boot:run
 
 Puerto `8082`, contratos `openapi-client-a.yaml` y `openapi-client-b.yaml`:
 
-```powershell
+```bash
 mvn -pl examples/poc-client spring-boot:run
 ```
 
@@ -115,28 +115,28 @@ mvn -pl examples/poc-client spring-boot:run
 
 Puerto `8083`, contrato propio de integración y consumo de Orders:
 
-```powershell
+```bash
 mvn -pl examples/poc-integration spring-boot:run
 ```
 
 Ejemplos de comprobación:
 
-```powershell
-curl.exe http://localhost:8080/api/v1/customers/1
-curl.exe http://localhost:8082/api/v1/orders-demo/ORD-1
+```bash
+curl http://localhost:8080/api/v1/customers/1
+curl http://localhost:8082/api/v1/orders-demo/ORD-1
 ```
 
 ## 6. Instalar las librerías en Maven Local
 
-Esta es la publicación local. Instala el BOM, las librerías, los starters y las PoC en `%USERPROFILE%\.m2\repository`:
+Esta es la publicación local. Instala el BOM, las librerías, los starters y las PoC en `~/.m2/repository`:
 
-```powershell
+```bash
 mvn clean install
 ```
 
 Para una instalación local con fuentes y Javadocs, usando el perfil `release`:
 
-```powershell
+```bash
 mvn clean install -Prelease
 ```
 
@@ -180,7 +180,7 @@ La publicación remota se realiza con `deploy`. Las credenciales no deben escrib
 
 ### 8.1 Configurar credenciales
 
-Agregar un servidor con el mismo `id` que usa el repositorio remoto en `%USERPROFILE%\.m2\settings.xml`:
+Agregar un servidor con el mismo `id` que usa el repositorio remoto en `~/.m2/settings.xml`:
 
 ```xml
 <settings>
@@ -215,7 +215,7 @@ En el estado actual del proyecto este bloque todavía no está definido en el PO
 
 Con una versión terminada en `-SNAPSHOT`:
 
-```powershell
+```bash
 mvn clean deploy
 ```
 
@@ -223,7 +223,7 @@ mvn clean deploy
 
 Con una versión sin `-SNAPSHOT`:
 
-```powershell
+```bash
 mvn clean deploy -Prelease
 ```
 
@@ -237,7 +237,7 @@ JitPack construye el proyecto desde un repositorio Git. El orden recomendado es:
 2. Confirmar que el `pom.xml` raíz compila desde un checkout limpio.
 3. Crear un tag de versión, por ejemplo:
 
-   ```powershell
+   ```bash
    git tag v1.0.0
    git push origin v1.0.0
    ```
@@ -251,8 +251,8 @@ JitPack no sustituye a Nexus como repositorio corporativo. Es una alternativa ú
 
 Ejecutar exactamente en este orden:
 
-```powershell
-cd C:\Users\adria\OneDrive\Escritorio\ProyectoLibreriaGT\andes-api-toolkit
+```bash
+cd /mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit
 java -version
 mvn -version
 mvn clean generate-sources -pl examples/poc-server,examples/poc-client,examples/poc-integration
@@ -283,7 +283,7 @@ Ejecutar el build desde la raíz del reactor. Para un módulo aislado usar `-am`
 
 Eliminar `target/` y volver a generar:
 
-```powershell
+```bash
 mvn clean generate-sources -pl examples/poc-server,examples/poc-client,examples/poc-integration
 mvn -DskipTests compile
 ```

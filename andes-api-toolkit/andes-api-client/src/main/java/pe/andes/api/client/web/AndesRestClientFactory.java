@@ -1,9 +1,9 @@
 package pe.andes.api.client.web;
 
-import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;
-import org.springframework.boot.http.client.ClientHttpRequestFactorySettings;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 import pe.andes.api.client.config.AndesClientProperties;
 import pe.andes.api.client.error.AndesClientErrorMapper;
@@ -26,10 +26,12 @@ public class AndesRestClientFactory {
 
     public RestClient createClient(String clientName, AndesClientProperties.ClientConfig config,
                                     List<AndesRestClientCustomizer> customizers) {
-        ClientHttpRequestFactorySettings settings = ClientHttpRequestFactorySettings.defaults()
-                .withConnectTimeout(config.getConnectTimeout())
-                .withReadTimeout(config.getReadTimeout());
-        ClientHttpRequestFactory requestFactory = ClientHttpRequestFactoryBuilder.detect().build(settings);
+        SimpleClientHttpRequestFactory simpleFactory = new SimpleClientHttpRequestFactory();
+        simpleFactory.setConnectTimeout(config.getConnectTimeout());
+        simpleFactory.setReadTimeout(config.getReadTimeout());
+        // Buffer the response so the error status handler below can read the body without
+        // consuming the single-use stream that the underlying HttpURLConnection exposes.
+        ClientHttpRequestFactory requestFactory = new BufferingClientHttpRequestFactory(simpleFactory);
 
         RestClient.Builder builder = RestClient.builder()
                 .baseUrl(config.getBaseUrl())

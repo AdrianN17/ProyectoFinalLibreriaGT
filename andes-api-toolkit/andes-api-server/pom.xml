@@ -56,7 +56,6 @@
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-models</artifactId>
-            <version>${swagger-models.version}</version>
         </dependency>
 
         <dependency>

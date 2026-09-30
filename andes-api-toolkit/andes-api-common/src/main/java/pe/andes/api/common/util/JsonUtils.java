@@ -3,6 +3,7 @@ package pe.andes.api.common.util;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 /**
  * Pure JSON (de)serialization helper backed by a single shared, thread-safe {@link ObjectMapper}.
@@ -11,6 +12,7 @@ public final class JsonUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
             .registerModule(new JavaTimeModule())
+            .registerModule(new ParameterNamesModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     private JsonUtils() {
