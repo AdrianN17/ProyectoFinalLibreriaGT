@@ -507,7 +507,7 @@ Scripts disponibles en `scripts/` (Linux/Mac `.sh` y Windows `.ps1` para cada un
 
 En Windows (PowerShell): `.\scripts\publish-local.ps1`, `.\scripts\publish-nexus.ps1`, `.\scripts\publish-jitpack.ps1` (mismos parámetros, sintaxis `-Nombre valor`).
 
-**JitPack — verificado end-to-end.** El build fue probado realmente contra el repositorio público `AdrianN17/ProyectoFinalLibreriaGT`, tag `v1.0.2` (los tags `v1.0.0`/`v1.0.1` quedaron rotos durante la depuración y no deben usarse). Estado del build: `https://jitpack.io/#AdrianN17/ProyectoFinalLibreriaGT/v1.0.2` (`status: ok`, 15 módulos publicados). Para que un consumidor use la librería vía JitPack:
+**JitPack — verificado end-to-end.** El build fue probado realmente contra el repositorio público `AdrianN17/ProyectoFinalLibreriaGT`, tag `v1.0.4` (los tags `v1.0.0`/`v1.0.1`/`v1.0.2`/`v1.0.3` quedaron rotos durante la depuración y no deben usarse). Estado del build: `https://jitpack.io/#AdrianN17/ProyectoFinalLibreriaGT/v1.0.4` (`status: ok`, 15 módulos publicados). Para que un consumidor use la librería vía JitPack:
 
 ```xml
 <repositories>
@@ -520,7 +520,7 @@ En Windows (PowerShell): `.\scripts\publish-local.ps1`, `.\scripts\publish-nexus
 <dependency>
     <groupId>com.github.AdrianN17</groupId>
     <artifactId>ProyectoFinalLibreriaGT</artifactId>
-    <version>v1.0.2</version>
+    <version>v1.0.4</version>
 </dependency>
 ```
 
@@ -535,7 +535,7 @@ Requisitos que tuvieron que resolverse para que el build de JitPack funcionara (
 
 - Faltan los documentos individuales sugeridos por la guía del curso (`ARCHITECTURE.md`, `GETTING_STARTED.md`, `SERVER.md`, `CLIENT.md`, `ERROR_HANDLING.md`, `CONFIGURATION.md`, `OPENAPI.md`, `VERSIONING.md`, `PUBLISHING.md`) — este README los consolida en un único documento por ahora.
 - No hay Spring REST Docs configurado (solo Javadoc + OpenAPI/Swagger UI autogenerado en `poc-server`/`poc-integration`).
-- La publicación fue **verificada de extremo a extremo**: JitPack (tag público `v1.0.2`, build `status: ok`, https://jitpack.io/#AdrianN17/ProyectoFinalLibreriaGT/v1.0.2) y un Nexus 3 real corriendo en Docker (`mvn deploy` real contra `http://localhost:8089`, 15 módulos confirmados vía API REST de Nexus). Publicar contra un Nexus corporativo en producción o Maven Central solo requiere cambiar las URLs/credenciales, no el mecanismo.
+- La publicación fue **verificada de extremo a extremo**: JitPack (tag público `v1.0.4`, build `status: ok`, https://jitpack.io/#AdrianN17/ProyectoFinalLibreriaGT/v1.0.4) y un Nexus 3 real corriendo en Docker (`mvn deploy` real contra `http://localhost:8089`, 15 módulos confirmados vía API REST de Nexus). Publicar contra un Nexus corporativo en producción o Maven Central solo requiere cambiar las URLs/credenciales, no el mecanismo.
 - Falta la presentación (ppt/diagramas) para la sustentación.
 
 ---
