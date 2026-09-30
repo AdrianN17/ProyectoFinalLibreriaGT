@@ -37,44 +37,44 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-api-common</artifactId>
                 <version>${andes.version}</version>
             </dependency>
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-api-server</artifactId>
                 <version>${andes.version}</version>
             </dependency>
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-api-client</artifactId>
                 <version>${andes.version}</version>
             </dependency>
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-api-server-spring-boot-starter</artifactId>
                 <version>${andes.version}</version>
             </dependency>
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-api-client-spring-boot-starter</artifactId>
                 <version>${andes.version}</version>
             </dependency>
             <!-- Librerias clasicas de Java puro -->
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-text-utils</artifactId>
                 <version>${andes.version}</version>
             </dependency>
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-id-generator</artifactId>
                 <version>${andes.version}</version>
             </dependency>
             <!-- Libreria de envoltura -->
             <dependency>
-                <groupId>pe.andes.api</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>andes-id-generator-spring-boot-starter</artifactId>
                 <version>${andes.version}</version>
             </dependency>

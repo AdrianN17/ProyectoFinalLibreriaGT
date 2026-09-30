@@ -18,11 +18,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>pe.andes.api</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>andes-api-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>pe.andes.api</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>andes-api-client</artifactId>
         </dependency>
 

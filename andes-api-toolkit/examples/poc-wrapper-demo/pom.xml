@@ -23,7 +23,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>pe.andes.api</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>andes-id-generator-spring-boot-starter</artifactId>
         </dependency>
 

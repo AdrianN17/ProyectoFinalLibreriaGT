@@ -24,11 +24,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>pe.andes.api</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>andes-text-utils</artifactId>
         </dependency>
         <dependency>
-            <groupId>pe.andes.api</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>andes-id-generator</artifactId>
         </dependency>
     </dependencies>
