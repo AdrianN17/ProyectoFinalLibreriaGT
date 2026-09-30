@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pe.andes.api</groupId>
+        <artifactId>andes-api-toolkit</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>poc-wrapper-demo</artifactId>
+    <packaging>jar</packaging>
+
+    <name>PoC - Wrapper Demo</name>
+    <description>
+        Prueba de concepto de la libreria de envoltura `andes-id-generator-spring-boot-starter`:
+        una app Spring Boot minima que inyecta `IdGeneratorService` (que a su vez envuelve la
+        libreria clasica de Java puro `andes-id-generator`) y lo expone via un endpoint REST.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-id-generator-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

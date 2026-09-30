@@ -3,30 +3,39 @@ package pe.andes.api.server.error;
 import pe.andes.api.common.model.ApiError;
 
 /**
- * Extension point to register HTTP mapping for exceptions that are not part of
- * the {@code AndesApiException} hierarchy (e.g. exceptions thrown by third-party
- * libraries). Implementations are picked up as Spring beans by
- * {@link GlobalExceptionHandler}.
+ * Punto de extensión para traducir excepciones ajenas a la jerarquía
+ * {@code AndesApiException} al contrato estándar de errores de Andes.
  *
- * @param <E> the exception type handled by this mapper
+ * <p>Las implementaciones suelen declararse como beans de Spring para que
+ * {@link GlobalExceptionHandler} las descubra e incorpore al flujo de manejo global de
+ * excepciones. Esto resulta útil para adaptar errores de librerías externas o de capas
+ * técnicas sin acoplarlas al modelo de excepciones propio del toolkit.
+ *
+ * @param <E> tipo concreto de excepción manejado por el adaptador
  */
 public interface AndesExceptionMapper<E extends Throwable> {
 
     /**
-     * @return the exception type this mapper is able to handle.
+     * Informa el tipo exacto de excepción compatible con este adaptador.
+     *
+     * @return clase de la excepción que este mapper sabe convertir
      */
     Class<E> getExceptionType();
 
     /**
-     * @return the HTTP status code the mapped response should use.
+     * Define el código de estado HTTP que debe usarse en la respuesta resultante.
+     *
+     * @return código HTTP asociado a la excepción adaptada
      */
     int getHttpStatus();
 
     /**
-     * Builds the {@link ApiError} payload for the given exception.
+     * Construye la carga útil {@link ApiError} para la excepción recibida.
      *
-     * @param exception the exception instance to map
-     * @param traceId   the current trace id, may be {@code null}
+     * @param exception instancia concreta de la excepción a traducir
+     * @param traceId identificador de traza/correlación vigente; puede ser {@code null} si la
+     *                petición no pasó por el filtro de correlación
+     * @return representación estandarizada del error para serializar en la respuesta
      */
     ApiError map(E exception, String traceId);
 }

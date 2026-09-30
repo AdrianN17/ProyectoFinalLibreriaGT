@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("InventoryFault_fault")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:08:30.749518838-05:00[America/Lima]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:37:54.929826446-05:00[America/Lima]", comments = "Generator version: 7.11.0")
 public class InventoryFaultFault {
 
   private @Nullable String reason;

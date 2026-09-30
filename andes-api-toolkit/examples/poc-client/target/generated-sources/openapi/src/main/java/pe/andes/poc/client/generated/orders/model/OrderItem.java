@@ -16,7 +16,7 @@ import jakarta.annotation.Generated;
  * OrderItem
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:08:29.645657944-05:00[America/Lima]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:37:54.754076244-05:00[America/Lima]", comments = "Generator version: 7.11.0")
 public class OrderItem {
 
   private @Nullable String sku;

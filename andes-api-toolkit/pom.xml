@@ -33,9 +33,16 @@
         <module>andes-api-client</module>
         <module>andes-api-server-spring-boot-starter</module>
         <module>andes-api-client-spring-boot-starter</module>
+        <!-- Librerias clasicas de Java puro (sin Spring), item 04 de la rubrica -->
+        <module>andes-text-utils</module>
+        <module>andes-id-generator</module>
+        <!-- Libreria de envoltura: expone andes-id-generator (estatica) como beans de Spring, item 05 -->
+        <module>andes-id-generator-spring-boot-starter</module>
         <module>examples/poc-server</module>
         <module>examples/poc-client</module>
         <module>examples/poc-integration</module>
+        <module>examples/poc-classic-libs</module>
+        <module>examples/poc-wrapper-demo</module>
     </modules>
 
     <properties>
@@ -65,7 +72,33 @@
         <openapi-generator-maven-plugin.version>7.11.0</openapi-generator-maven-plugin.version>
         <swagger-models.version>2.2.22</swagger-models.version>
         <swagger-annotations.version>2.2.22</swagger-annotations.version>
+
+        <!--
+            Publication targets (item 08 de la rubrica): URLs por defecto apuntando a un
+            repositorio LOCAL basado en archivo (para poder ejecutar `mvn deploy` de punta a
+            punta sin depender de un servidor Nexus real). Para publicar contra un Nexus/Artifactory
+            corporativo real, sobreescribe estas propiedades:
+              mvn deploy -Dnexus.releases.url=https://nexus.miempresa.com/repository/maven-releases/ \
+                         -Dnexus.snapshots.url=https://nexus.miempresa.com/repository/maven-snapshots/
+            y define las credenciales del servidor <id>nexus-releases</id>/<id>nexus-snapshots</id>
+            en ~/.m2/settings.xml (ver scripts/publish-nexus.sh|ps1).
+        -->
+        <nexus.releases.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/releases</nexus.releases.url>
+        <nexus.snapshots.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/snapshots</nexus.snapshots.url>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Releases (local/corporativo)</name>
+            <url>${nexus.releases.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshots (local/corporativo)</name>
+            <url>${nexus.snapshots.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencyManagement>
         <dependencies>

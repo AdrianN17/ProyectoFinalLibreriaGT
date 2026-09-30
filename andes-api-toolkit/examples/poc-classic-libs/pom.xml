@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>pe.andes.api</groupId>
+        <artifactId>andes-api-toolkit</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>poc-classic-libs</artifactId>
+    <packaging>jar</packaging>
+
+    <name>PoC - Classic Libraries (Java puro)</name>
+    <description>
+        Prueba de concepto SIN Spring: una aplicacion de linea de comandos con un unico
+        `main()` que demuestra el uso de las librerias clasicas `andes-text-utils` y
+        `andes-id-generator`, ambas utilizables en cualquier proyecto Java sin necesidad de
+        ningun framework.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-text-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-id-generator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>poc-classic-libs</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>pe.andes.poc.classiclibs.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <mainClass>pe.andes.poc.classiclibs.Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

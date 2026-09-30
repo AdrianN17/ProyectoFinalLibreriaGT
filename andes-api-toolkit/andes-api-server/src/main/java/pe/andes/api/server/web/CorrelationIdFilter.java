@@ -15,10 +15,13 @@ import pe.andes.api.common.util.HeaderUtils;
 import java.io.IOException;
 
 /**
- * Reads (or generates) the correlation id and request id for every incoming request,
- * exposes them via {@link MDC} for logging and echoes them back in the response headers.
- * Also logs a single line per request (method, URI, status, duration) so every server
- * PoC gets basic request logging out of the box.
+ * Filtro servlet que resuelve, propaga y limpia los identificadores de trazabilidad por petición.
+ *
+ * <p>Al extender {@link OncePerRequestFilter}, Spring garantiza una sola ejecución por request.
+ * El filtro lee los encabezados Andes de correlación, genera valores cuando está permitido,
+ * publica ambos identificadores en {@link MDC} para enriquecer logs y los devuelve en la
+ * respuesta HTTP. También emite un registro básico de entrada/salida para facilitar el
+ * seguimiento extremo a extremo de las llamadas.
  */
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
@@ -26,10 +29,29 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
 
     private final boolean generateIfMissing;
 
+    /**
+     * Crea el filtro indicando si puede generar identificadores faltantes o inválidos.
+     *
+     * @param generateIfMissing {@code true} para generar {@code correlationId}/{@code requestId}
+     *                          cuando el cliente no los provee correctamente
+     */
     public CorrelationIdFilter(boolean generateIfMissing) {
         this.generateIfMissing = generateIfMissing;
     }
 
+    /**
+     * Ejecuta la lógica principal del filtro para una petición HTTP.
+     *
+     * <p>El método resuelve los identificadores, los registra en el {@link MDC}, los refleja en la
+     * respuesta y delega la continuación de la cadena de filtros. Finalmente limpia el contexto
+     * para evitar fugas entre peticiones reutilizando hilos del contenedor.
+     *
+     * @param request petición HTTP entrante
+     * @param response respuesta HTTP saliente
+     * @param filterChain cadena de filtros del contenedor servlet
+     * @throws ServletException si ocurre un error propio de la cadena servlet
+     * @throws IOException si falla la lectura o escritura del flujo HTTP
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

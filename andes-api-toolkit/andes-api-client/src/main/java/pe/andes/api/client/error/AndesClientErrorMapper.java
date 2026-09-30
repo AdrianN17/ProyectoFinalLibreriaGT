@@ -15,20 +15,31 @@ import pe.andes.api.common.util.JsonUtils;
 import java.util.List;
 
 /**
- * Maps HTTP error responses from remote APIs to the common Andes exception hierarchy:
+ * Traduce errores HTTP devueltos por servicios remotos a la jerarquía de excepciones común de
+ * Andes. Esta clase es utilizada por {@link pe.andes.api.client.web.AndesRestClientFactory} para
+ * conectar el manejo de estados erróneos del {@link org.springframework.web.client.RestClient} con
+ * excepciones de dominio reutilizables por el consumidor del cliente.
  *
  * <pre>
  * 404 -&gt; AndesNotFoundException        401 -&gt; AndesAuthenticationException
- * 403 -&gt; AndesAuthorizationException    409 -&gt; AndesConflictException
- * 400 -&gt; AndesBadRequestException       422 -&gt; AndesValidationException
- * 5xx / other -&gt; AndesRemoteServiceException
+ * 403 -&gt; AndesAuthorizationException   409 -&gt; AndesConflictException
+ * 400 -&gt; AndesBadRequestException      422 -&gt; AndesValidationException
+ * 5xx / otros -&gt; AndesRemoteServiceException
  * </pre>
  *
- * When the remote body matches the Andes {@link ApiError} contract, its code/message/details/traceId
- * are preserved; otherwise a best-effort generic message is built from the raw response body.
+ * Si el cuerpo remoto respeta el contrato {@link ApiError}, se conservan su código, mensaje,
+ * detalles y trace id. En caso contrario, se construye un mensaje genérico de mejor esfuerzo.
  */
 public class AndesClientErrorMapper {
 
+    /**
+     * Convierte un error HTTP remoto en una excepción Andes específica según el código de estado.
+     *
+     * @param endpoint endpoint o URI que produjo el error
+     * @param statusCode código de estado HTTP recibido
+     * @param responseBody cuerpo de respuesta recibido desde el servicio remoto
+     * @return excepción Andes equivalente al error remoto
+     */
     public AndesApiException map(String endpoint, int statusCode, String responseBody) {
         ApiError remoteError = tryParse(responseBody);
         String message = remoteError != null && remoteError.getMessage() != null
@@ -48,6 +59,12 @@ public class AndesClientErrorMapper {
         };
     }
 
+    /**
+     * Intenta deserializar el cuerpo remoto al contrato estándar de error de Andes.
+     *
+     * @param body cuerpo de respuesta recibido
+     * @return error deserializado o {@code null} si el contenido no puede interpretarse
+     */
     private ApiError tryParse(String body) {
         if (body == null || body.isBlank()) {
             return null;

@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link CheckoutsApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:06:54.005441654-05:00[America/Lima]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:37:57.686528865-05:00[America/Lima]", comments = "Generator version: 7.11.0")
 public interface CheckoutsApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {

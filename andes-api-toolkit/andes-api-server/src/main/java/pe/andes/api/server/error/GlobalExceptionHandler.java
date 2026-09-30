@@ -23,17 +23,21 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Centralized {@code @RestControllerAdvice} that maps exceptions to the standard
- * {@code ApiResponse} envelope and the HTTP status codes defined by the Andes
- * exception hierarchy:
+ * Manejador global de excepciones para controladores REST basados en Spring MVC/WebFlux.
+ *
+ * <p>Al exponerse como {@code @RestControllerAdvice}, intercepta excepciones lanzadas durante el
+ * procesamiento de la petición y las transforma en el envoltorio estándar {@code ApiResponse}. El
+ * mapeo principal sigue la jerarquía {@code AndesApiException} y complementa escenarios comunes de
+ * validación, errores de entrada y fallos inesperados.
  *
  * <pre>
  * 400 -&gt; BadRequest        401 -&gt; Authentication   403 -&gt; Authorization
- * 404 -&gt; NotFound          409 -&gt; Conflict          422 -&gt; Validation
+ * 404 -&gt; NotFound          409 -&gt; Conflict         422 -&gt; Validation
  * 500 -&gt; InternalServerError
  * </pre>
  *
- * Additional exception types can be handled by registering {@link AndesExceptionMapper} beans.
+ * <p>Además, integra mapeadores personalizados {@link AndesExceptionMapper} para traducir
+ * excepciones de terceros al mismo contrato de error sin duplicar lógica en cada controlador.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -43,11 +47,24 @@ public class GlobalExceptionHandler {
     private final List<AndesExceptionMapper<?>> customMappers;
     private final boolean includeStackTrace;
 
+    /**
+     * Crea el manejador global con los adaptadores personalizados registrados en Spring.
+     *
+     * @param customMappers mapeadores adicionales para excepciones no cubiertas por el toolkit
+     * @param includeStackTrace {@code true} si los errores 500 deben exponer detalle técnico
+     */
     public GlobalExceptionHandler(List<AndesExceptionMapper<?>> customMappers, boolean includeStackTrace) {
         this.customMappers = customMappers;
         this.includeStackTrace = includeStackTrace;
     }
 
+    /**
+     * Traduce excepciones de negocio Andes al código HTTP y cuerpo estandarizado ya definidos por
+     * la propia excepción.
+     *
+     * @param ex excepción de la jerarquía Andes
+     * @return respuesta HTTP con el estado y {@code ApiError} derivados de la excepción
+     */
     @ExceptionHandler(AndesApiException.class)
     public ResponseEntity<ApiResponse<Void>> handleAndesApiException(AndesApiException ex) {
         log.warn("Handled AndesApiException [{}]: {}", ex.getErrorCode(), ex.getMessage());
@@ -55,6 +72,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getHttpStatus()).body(ApiResponse.error(error));
     }
 
+    /**
+     * Maneja errores de validación de {@code @Valid} sobre cuerpos o formularios enlazados por
+     * Spring.
+     *
+     * @param ex excepción producida por el binding/validation de argumentos
+     * @return respuesta 422 con el detalle por campo invalidado
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Void>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         List<ApiErrorDetail> details = ex.getBindingResult().getFieldErrors().stream()
@@ -71,6 +95,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ApiResponse.error(error));
     }
 
+    /**
+     * Maneja violaciones de restricciones Bean Validation disparadas fuera del binding de cuerpos,
+     * por ejemplo sobre parámetros de métodos o validaciones programáticas.
+     *
+     * @param ex excepción con el conjunto de restricciones incumplidas
+     * @return respuesta 422 con el detalle de cada violación
+     */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ApiResponse<Void>> handleConstraintViolation(ConstraintViolationException ex) {
         List<ApiErrorDetail> details = ex.getConstraintViolations().stream()
@@ -87,6 +118,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ApiResponse.error(error));
     }
 
+    /**
+     * Maneja errores de entrada reportados por Spring al no poder deserializar o convertir datos
+     * de la petición.
+     *
+     * @param ex excepción que describe la razón del problema de entrada
+     * @return respuesta 400 con un mensaje orientado al consumidor
+     */
     @ExceptionHandler(ServerWebInputException.class)
     public ResponseEntity<ApiResponse<Void>> handleServerWebInput(ServerWebInputException ex) {
         ApiError error = ErrorUtils.toApiError("BAD_REQUEST", HttpStatus.BAD_REQUEST.value(),
@@ -94,6 +132,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error(error));
     }
 
+    /**
+     * Punto de captura final para cualquier excepción no manejada explícitamente.
+     *
+     * <p>Primero intenta delegar la traducción a un {@link AndesExceptionMapper} personalizado y,
+     * si ninguno aplica, responde con un error 500 estándar.
+     *
+     * @param ex excepción no controlada durante el procesamiento de la petición
+     * @return respuesta personalizada o un error interno genérico
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGenericException(Exception ex) {
         Optional<ResponseEntity<ApiResponse<Void>>> customResult = tryCustomMapper(ex);

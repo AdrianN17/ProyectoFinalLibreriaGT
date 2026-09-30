@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * CustomerPage
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:08:29.761036194-05:00[America/Lima]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:37:53.161529900-05:00[America/Lima]", comments = "Generator version: 7.11.0")
 public class CustomerPage {
 
   @Valid

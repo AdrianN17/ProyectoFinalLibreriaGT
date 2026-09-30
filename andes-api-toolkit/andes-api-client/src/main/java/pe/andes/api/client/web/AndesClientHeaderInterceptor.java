@@ -18,12 +18,11 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Adds correlation id, request id, content type and default headers to every outgoing
- * request of a named client. When invoked within a Server request already carrying a
- * correlation id in {@link MDC} (see {@code CorrelationIdFilter} in andes-api-server),
- * that id is propagated instead of generating a new one.
- * Also logs one line per outgoing call (method, URI, status, duration) so every PoC that
- * uses a generated client gets basic request logging out of the box.
+ * Interceptor HTTP que completa encabezados estándar y registra cada invocación saliente de un
+ * cliente Andes. El {@link pe.andes.api.client.web.AndesRestClientFactory} lo instala en el
+ * {@link org.springframework.web.client.RestClient} de cada cliente para propagar correlation id,
+ * generar request id, aplicar {@code Content-Type} y añadir encabezados por defecto definidos en
+ * {@link AndesClientProperties.ClientConfig}.
  */
 public class AndesClientHeaderInterceptor implements ClientHttpRequestInterceptor {
 
@@ -31,10 +30,25 @@ public class AndesClientHeaderInterceptor implements ClientHttpRequestIntercepto
 
     private final AndesClientProperties.ClientConfig config;
 
+    /**
+     * Crea el interceptor usando la configuración del cliente al que estará asociado.
+     *
+     * @param config configuración del cliente que define qué encabezados automáticos aplicar
+     */
     public AndesClientHeaderInterceptor(AndesClientProperties.ClientConfig config) {
         this.config = config;
     }
 
+    /**
+     * Intercepta la solicitud saliente, completa los encabezados faltantes y registra una línea de
+     * log antes y después de ejecutar la llamada remota.
+     *
+     * @param request solicitud HTTP que se enviará
+     * @param body cuerpo serializado de la solicitud
+     * @param execution cadena responsable de continuar la ejecución
+     * @return respuesta HTTP del servicio remoto
+     * @throws IOException si ocurre un problema de entrada o salida durante la ejecución
+     */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
             throws IOException {

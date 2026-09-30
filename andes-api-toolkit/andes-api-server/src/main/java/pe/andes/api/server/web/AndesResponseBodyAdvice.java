@@ -13,20 +13,43 @@ import pe.andes.api.common.http.AndesApiConstants;
 import org.slf4j.MDC;
 
 /**
- * Automatically wraps successful controller return values into the standard
- * {@link ApiResponse} envelope, unless the value is already an {@code ApiResponse}
- * or the response type is explicitly excluded (e.g. binary payloads, {@code String}
- * bodies handled by {@code StringHttpMessageConverter}, or {@link ResponseStatusException}).
+ * Adaptador transversal de respuestas exitosas basado en {@link ResponseBodyAdvice}.
+ *
+ * <p>Spring invoca este componente justo antes de serializar el cuerpo HTTP de un controlador
+ * REST. Su responsabilidad es envolver el resultado en {@link ApiResponse} y adjuntar metadatos
+ * de trazabilidad tomados del {@link MDC}, de modo que los consumidores reciban un contrato
+ * homogéneo sin que cada endpoint tenga que construirlo manualmente.
  */
 @RestControllerAdvice
 public class AndesResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
+    /**
+     * Determina si el valor devuelto por el controlador debe pasar por el envoltorio estándar.
+     *
+     * @param returnType firma del método controlador seleccionada por Spring
+     * @param converterType convertidor HTTP que serializará el cuerpo
+     * @return {@code true} cuando el tipo declarado no es ya un {@code ApiResponse}
+     */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         Class<?> type = returnType.getParameterType();
         return !ApiResponse.class.isAssignableFrom(type);
     }
 
+    /**
+     * Envuelve el cuerpo exitoso en {@link ApiResponse} e inyecta metadatos de correlación.
+     *
+     * <p>Si el controlador ya devolvió un {@code ApiResponse}, el valor se retorna intacto para
+     * evitar dobles envolturas.
+     *
+     * @param body cuerpo producido por el controlador
+     * @param returnType firma del método controlador
+     * @param selectedContentType tipo de contenido negociado
+     * @param selectedConverterType convertidor HTTP que escribirá el cuerpo
+     * @param request abstracción de la petición actual
+     * @param response abstracción de la respuesta actual
+     * @return cuerpo original o un {@code ApiResponse} exitoso con metadatos Andes
+     */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
                                    Class<? extends HttpMessageConverter<?>> selectedConverterType,

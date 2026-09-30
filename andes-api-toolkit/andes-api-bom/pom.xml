@@ -20,6 +20,20 @@
         <andes.version>1.0.0-SNAPSHOT</andes.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Releases (local/corporativo)</name>
+            <url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshots (local/corporativo)</name>
+            <url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -45,6 +59,23 @@
             <dependency>
                 <groupId>pe.andes.api</groupId>
                 <artifactId>andes-api-client-spring-boot-starter</artifactId>
+                <version>${andes.version}</version>
+            </dependency>
+            <!-- Librerias clasicas de Java puro -->
+            <dependency>
+                <groupId>pe.andes.api</groupId>
+                <artifactId>andes-text-utils</artifactId>
+                <version>${andes.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pe.andes.api</groupId>
+                <artifactId>andes-id-generator</artifactId>
+                <version>${andes.version}</version>
+            </dependency>
+            <!-- Libreria de envoltura -->
+            <dependency>
+                <groupId>pe.andes.api</groupId>
+                <artifactId>andes-id-generator-spring-boot-starter</artifactId>
                 <version>${andes.version}</version>
             </dependency>
         </dependencies>

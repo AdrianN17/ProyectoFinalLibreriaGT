@@ -12,25 +12,39 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * Builds a configured {@link RestClient} for a named client configuration: base URL,
- * connect/read timeouts, standard headers (correlation id, request id, content type)
- * and centralized HTTP-error-to-exception mapping.
+ * Fábrica responsable de construir el {@link RestClient} de cada cliente Andes a partir de su
+ * configuración declarativa. Combina la URL base y los timeouts de
+ * {@link AndesClientProperties.ClientConfig}, instala {@link AndesClientHeaderInterceptor} para
+ * encabezados estándar y logging, y conecta {@link AndesClientErrorMapper} para transformar
+ * respuestas con error en excepciones del dominio Andes.
  */
 public class AndesRestClientFactory {
 
     private final AndesClientErrorMapper errorMapper;
 
+    /**
+     * Crea la fábrica con el convertidor de errores que usarán todos los clientes construidos.
+     *
+     * @param errorMapper componente que transforma errores HTTP remotos en excepciones Andes
+     */
     public AndesRestClientFactory(AndesClientErrorMapper errorMapper) {
         this.errorMapper = errorMapper;
     }
 
+    /**
+     * Construye un {@link RestClient} listo para ser envuelto por {@code AndesApiClient} y
+     * registrado en el {@code AndesApiClientRegistry}.
+     *
+     * @param clientName nombre lógico del cliente en construcción
+     * @param config configuración declarada para el cliente
+     * @param customizers personalizaciones adicionales aportadas por beans de Spring
+     * @return cliente HTTP configurado para consumir el servicio remoto
+     */
     public RestClient createClient(String clientName, AndesClientProperties.ClientConfig config,
                                     List<AndesRestClientCustomizer> customizers) {
         SimpleClientHttpRequestFactory simpleFactory = new SimpleClientHttpRequestFactory();
         simpleFactory.setConnectTimeout(config.getConnectTimeout());
         simpleFactory.setReadTimeout(config.getReadTimeout());
-        // Buffer the response so the error status handler below can read the body without
-        // consuming the single-use stream that the underlying HttpURLConnection exposes.
         ClientHttpRequestFactory requestFactory = new BufferingClientHttpRequestFactory(simpleFactory);
 
         RestClient.Builder builder = RestClient.builder()

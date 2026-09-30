@@ -33,9 +33,14 @@ El objetivo no es un API Gateway ni un framework completo: es un conjunto de lib
 | `andes-api-server-spring-boot-starter` | Starter autoconfigurable | Registra automáticamente los beans de `andes-api-server` vía `@AutoConfiguration` | `andes-api-server` |
 | `andes-api-client` | Librería wrapper (Spring `RestClient`) | Headers, timeouts, serialización, mapeo de errores HTTP → excepciones | `andes-api-common`, `spring-web` |
 | `andes-api-client-spring-boot-starter` | Starter autoconfigurable | Crea automáticamente un `AndesApiClient` por cada cliente configurado en `application.yml` | `andes-api-client` |
+| `andes-text-utils` | **Librería clásica** (Java puro) | Slugs, truncado y enmascarado de texto (`SlugUtils`, `MaskUtils`); clases `final`, métodos `static`, cero dependencias | — |
+| `andes-id-generator` | **Librería clásica** (Java puro) | Generación de ids ordenables tipo ULID y checksums (`UlidGenerator`, `ChecksumUtils`); clases `final`, métodos `static`, cero dependencias | — |
+| `andes-id-generator-spring-boot-starter` | **Librería de envoltura** + autoconfigurable | Envuelve `andes-id-generator` (estático) en un bean `IdGeneratorService` inyectable, registrado vía `@AutoConfiguration` | `andes-id-generator`, `spring-boot-autoconfigure` |
 | `examples/poc-server` | PoC | Expone `contracts/openapi-server.yaml` (API-first, patrón delegate) | starter Server |
 | `examples/poc-client` | PoC | Consume `openapi-client-a.yaml` e `openapi-client-b.yaml` (modelos generados) | starter Client |
 | `examples/poc-integration` | PoC | Expone su propio contrato (`openapi-integration.yaml`) y consume una API externa internamente | starter Server + starter Client |
+| `examples/poc-classic-libs` | PoC (Java puro, **sin Spring**) | `main()` de consola que demuestra `andes-text-utils` + `andes-id-generator` | `andes-text-utils`, `andes-id-generator` |
+| `examples/poc-wrapper-demo` | PoC (Spring Boot) | Endpoint REST que usa `IdGeneratorService` inyectado por autoconfiguración | starter `andes-id-generator-spring-boot-starter` |
 
 ---
 
@@ -78,6 +83,9 @@ andes-api-toolkit/
 ├── andes-api-client/
 ├── andes-api-server-spring-boot-starter/
 ├── andes-api-client-spring-boot-starter/
+├── andes-text-utils/                    # librería clásica #1 (Java puro)
+├── andes-id-generator/                  # librería clásica #2 (Java puro)
+├── andes-id-generator-spring-boot-starter/  # librería de envoltura (wraps andes-id-generator)
 ├── contracts/                           # fuente de verdad (OpenAPI 3) — ver sección 5
 │   ├── openapi-server.yaml
 │   ├── openapi-client-a.yaml
@@ -86,7 +94,9 @@ andes-api-toolkit/
 └── examples/
     ├── poc-server/
     ├── poc-client/
-    └── poc-integration/
+    ├── poc-integration/
+    ├── poc-classic-libs/                # PoC sin Spring de las librerías clásicas
+    └── poc-wrapper-demo/                # PoC Spring Boot de la librería de envoltura
 ```
 
 ---
@@ -231,6 +241,55 @@ Permite a un consumidor externo fijar todas las versiones con un solo `import`:
     </dependency>
   </dependencies>
 </dependencyManagement>
+```
+
+### 4.6 Librerías clásicas: `andes-text-utils` y `andes-id-generator`
+
+Dos librerías de **Java puro**, sin ninguna dependencia de Spring ni de ningún framework, pensadas para poder usarse en cualquier tipo de aplicación (Spring, batch, CLI, Jakarta EE, etc.):
+
+- **`andes-text-utils`**: `SlugUtils` (normaliza texto a slugs) y `MaskUtils` (enmascara correos/tarjetas).
+- **`andes-id-generator`**: `UlidGenerator` (ids únicos ordenables por tiempo, estilo ULID) y `ChecksumUtils` (CRC32/SHA-256).
+
+Todas las clases son `final`, con constructor privado (lanzan `AssertionError` si se intenta instanciar por reflexión) y **métodos exclusivamente `static`**.
+
+PoC de uso (sin Spring, un simple `main()`):
+
+```bash
+cd examples/poc-classic-libs
+mvn -q compile exec:java
+# o, con el jar ya empaquetado (agregando las dependencias al classpath manualmente):
+mvn -q package
+java -cp target/classes:../../andes-text-utils/target/classes:../../andes-id-generator/target/classes pe.andes.poc.classiclibs.Main
+```
+
+### 4.7 Librería de envoltura: `andes-id-generator-spring-boot-starter`
+
+Envuelve los métodos estáticos de `andes-id-generator` en un bean de Spring (`IdGeneratorService`), registrado automáticamente vía `@AutoConfiguration`, sin modificar ni duplicar la librería clásica original. Este es el patrón típico para integrar código legacy o librerías de métodos estáticos dentro del ecosistema Spring.
+
+```java
+@RestController
+public class IdGeneratorDemoController {
+    private final IdGeneratorService idGeneratorService; // inyectado automáticamente
+
+    public IdGeneratorDemoController(IdGeneratorService idGeneratorService) {
+        this.idGeneratorService = idGeneratorService;
+    }
+
+    @GetMapping("/api/v1/ids")
+    public Map<String, String> generate() {
+        return Map.of("id", idGeneratorService.newId());
+    }
+}
+```
+
+PoC de uso (`examples/poc-wrapper-demo`, puerto 8084):
+
+```bash
+cd examples/poc-wrapper-demo
+mvn -q spring-boot:run &
+curl -s http://localhost:8084/api/v1/ids
+curl -s "http://localhost:8084/api/v1/ids?prefix=ORD"
+curl -s http://localhost:8084/api/v1/ids/hola/checksum
 ```
 
 ---
@@ -388,7 +447,9 @@ El `andes-api-bom` siempre fija la misma versión para todos los artefactos del 
 | `andes-api-server-spring-boot-starter` | Integración de autoconfiguración (`ApplicationContextRunner`) | `spring-boot-test-autoconfigure` |
 | `andes-api-client` | Unitarios + integración HTTP simulada | JUnit 5, WireMock |
 | `andes-api-client-spring-boot-starter` | Integración de autoconfiguración | `spring-boot-test-autoconfigure` |
-| `examples/*` | Integración end-to-end (`@SpringBootTest`) | `TestRestTemplate` |
+| `andes-text-utils` / `andes-id-generator` | Unitarios (Java puro) | JUnit 5 |
+| `andes-id-generator-spring-boot-starter` | Integración de autoconfiguración | `spring-boot-test-autoconfigure`, AssertJ |
+| `examples/*` | Integración end-to-end (`@SpringBootTest`) | `RestTestClient` |
 
 ```bash
 mvn test                 # todos los módulos
@@ -399,28 +460,41 @@ mvn -pl andes-api-client test   # un módulo puntual
 
 ## 11. Publicación
 
-Estrategia prevista (Maven estándar, sin credenciales embebidas):
+El proyecto tiene configurado `<distributionManagement>` (pom raíz y `andes-api-bom`) con dos repositorios: `nexus-releases` y `nexus-snapshots`. Por defecto apuntan a un repositorio **local basado en archivo** (`.local-nexus-repo/`, ignorado por git) para poder ejecutar `mvn deploy` de punta a punta sin depender de un servidor real — **esto ya fue probado y verificado** (los 15 módulos se publicaron correctamente, ver `.local-nexus-repo/snapshots/pe/andes/api/...`).
+
+Scripts disponibles en `scripts/` (Linux/Mac `.sh` y Windows `.ps1` para cada uno):
+
+| Script | Qué hace |
+|---|---|
+| `publish-local.sh` / `.ps1` | `mvn clean install` → publica en Maven Local (`~/.m2`) |
+| `publish-nexus.sh` / `.ps1` | `mvn clean deploy` → publica en el repo configurado en `distributionManagement` (local de prueba por defecto, o un Nexus/Artifactory real pasando las URLs como argumento) |
+| `publish-jitpack.sh` / `.ps1` | Crea y empuja un tag `vX.Y.Z` (a partir de la versión del pom, sin `-SNAPSHOT`); JitPack construye el artefacto bajo demanda a partir de ese tag, sin necesitar configuración adicional del lado del proyecto |
 
 ```bash
-# Instalación local (Maven Local)
-mvn clean install
+# Maven Local
+./scripts/publish-local.sh
 
-# Publicación a un repositorio remoto (Nexus/Artifactory) configurado en settings.xml / distributionManagement
-mvn clean deploy
+# Nexus/Artifactory: modo local de prueba (sin argumentos)
+./scripts/publish-nexus.sh
+
+# Nexus/Artifactory real (requiere credenciales en ~/.m2/settings.xml, serverId nexus-releases/nexus-snapshots)
+./scripts/publish-nexus.sh https://nexus.miempresa.com/repository/maven-releases/ \
+                           https://nexus.miempresa.com/repository/maven-snapshots/
+
+# JitPack
+./scripts/publish-jitpack.sh
 ```
 
-Para JitPack no se requiere configuración adicional del lado del proyecto: basta con que el repositorio esté publicado en GitHub/GitLab con un tag `vX.Y.Z`; JitPack construye el artefacto bajo demanda a partir del `pom.xml` existente.
-
-> Los scripts de publicación automatizados (`scripts/publish-local.ps1|sh`, `publish-nexus.*`, `publish-jitpack.*`) mencionados en la guía del curso **aún no se han creado** — son el siguiente paso pendiente de este README.
+En Windows (PowerShell): `.\scripts\publish-local.ps1`, `.\scripts\publish-nexus.ps1`, `.\scripts\publish-jitpack.ps1` (mismos parámetros, sintaxis `-Nombre valor`).
 
 ---
 
 ## 12. Limitaciones conocidas / próximos pasos
 
-- ⚠️ El build con `openapi-generator-maven-plugin` **no ha sido validado con una ejecución real de Maven** en este entorno de desarrollo (herramienta no disponible al momento de escribir este documento). Ejecutar `mvn -q -DskipTests generate-sources compile` antes de la entrega y ajustar nombres de clases generadas si difieren de lo documentado en la [sección 5](#5-enfoque-api-first).
 - Faltan los documentos individuales sugeridos por la guía del curso (`ARCHITECTURE.md`, `GETTING_STARTED.md`, `SERVER.md`, `CLIENT.md`, `ERROR_HANDLING.md`, `CONFIGURATION.md`, `OPENAPI.md`, `VERSIONING.md`, `PUBLISHING.md`) — este README los consolida en un único documento por ahora.
-- Faltan los scripts de publicación (`scripts/*.sh`, `scripts/*.ps1`).
-- Spring Boot 4.1.1 es una versión "forward-looking" fijada a pedido del curso; validar disponibilidad real en Maven Central al momento de construir.
+- No hay Spring REST Docs configurado (solo Javadoc + OpenAPI/Swagger UI autogenerado en `poc-server`/`poc-integration`).
+- La publicación a Nexus/JitPack fue verificada con `mvn deploy` real contra un repositorio de prueba local; publicar contra un Nexus corporativo o Maven Central real requiere credenciales que no se han configurado en este entorno académico.
+- Falta la presentación (ppt/diagramas) para la sustentación.
 
 ---
 

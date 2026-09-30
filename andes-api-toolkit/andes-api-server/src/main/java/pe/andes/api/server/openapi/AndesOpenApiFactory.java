@@ -14,16 +14,25 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Builds a Swagger/OpenAPI {@link OpenAPI} model from {@link AndesServerProperties.OpenApi}.
- * The resulting bean is automatically picked up by springdoc-openapi (when present on the
- * classpath) to enrich the generated OpenAPI document without overriding the actual API
- * contract defined by the application's endpoints.
+ * Fábrica utilitaria para construir un modelo {@link OpenAPI} a partir de
+ * {@link AndesServerProperties.OpenApi}.
+ *
+ * <p>El objeto resultante se publica como bean por la autoconfiguración y springdoc-openapi lo
+ * incorpora automáticamente al documento generado. De esta forma se añaden metadatos, servidores,
+ * etiquetas y esquemas de seguridad sin alterar el contrato real definido por los endpoints y sus
+ * anotaciones.
  */
 public final class AndesOpenApiFactory {
 
     private AndesOpenApiFactory() {
     }
 
+    /**
+     * Construye una instancia de {@link OpenAPI} enriquecida con la configuración suministrada.
+     *
+     * @param props propiedades de OpenAPI enlazadas por Spring Boot
+     * @return modelo OpenAPI listo para ser consumido por springdoc
+     */
     public static OpenAPI build(AndesServerProperties.OpenApi props) {
         Info info = new Info()
                 .title(props.getTitle())

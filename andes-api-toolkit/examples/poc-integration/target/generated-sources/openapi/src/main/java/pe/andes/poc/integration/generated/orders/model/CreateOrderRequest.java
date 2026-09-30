@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * CreateOrderRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:06:54.307742554-05:00[America/Lima]", comments = "Generator version: 7.11.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-09-30T00:37:57.900966854-05:00[America/Lima]", comments = "Generator version: 7.11.0")
 public class CreateOrderRequest {
 
   private Long customerId;
