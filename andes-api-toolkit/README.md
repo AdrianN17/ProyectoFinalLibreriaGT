@@ -460,7 +460,27 @@ mvn -pl andes-api-client test   # un módulo puntual
 
 ## 11. Publicación
 
-El proyecto tiene configurado `<distributionManagement>` (pom raíz y `andes-api-bom`) con dos repositorios: `nexus-releases` y `nexus-snapshots`. Por defecto apuntan a un repositorio **local basado en archivo** (`.local-nexus-repo/`, ignorado por git) para poder ejecutar `mvn deploy` de punta a punta sin depender de un servidor real — **esto ya fue probado y verificado** (los 15 módulos se publicaron correctamente, ver `.local-nexus-repo/snapshots/pe/andes/api/...`).
+El proyecto tiene configurado `<distributionManagement>` (pom raíz y `andes-api-bom`) con dos repositorios: `nexus-releases` y `nexus-snapshots`. **Verificado con un Nexus 3 real corriendo en Docker** (`sonatype/nexus3`, puerto expuesto `8089`): los 15 módulos se publicaron correctamente vía `mvn deploy` contra `http://localhost:8089/repository/maven-snapshots/` (confirmado con la API REST de Nexus, `/service/rest/v1/search`). También soporta el modo de repositorio local basado en archivo (`.local-nexus-repo/`, ignorado por git) para probar sin depender de un servidor.
+
+Para publicar contra un Nexus real se necesitan credenciales en `~/.m2/settings.xml`:
+
+```xml
+<settings>
+  <servers>
+    <server>
+      <id>nexus-releases</id>
+      <username>admin</username>
+      <password>admin1234</password>
+    </server>
+    <server>
+      <id>nexus-snapshots</id>
+      <username>admin</username>
+      <password>admin1234</password>
+    </server>
+  </servers>
+</settings>
+```
+
 
 Scripts disponibles en `scripts/` (Linux/Mac `.sh` y Windows `.ps1` para cada uno):
 
@@ -478,14 +498,36 @@ Scripts disponibles en `scripts/` (Linux/Mac `.sh` y Windows `.ps1` para cada un
 ./scripts/publish-nexus.sh
 
 # Nexus/Artifactory real (requiere credenciales en ~/.m2/settings.xml, serverId nexus-releases/nexus-snapshots)
-./scripts/publish-nexus.sh https://nexus.miempresa.com/repository/maven-releases/ \
-                           https://nexus.miempresa.com/repository/maven-snapshots/
+./scripts/publish-nexus.sh http://localhost:8089/repository/maven-releases/ \
+                           http://localhost:8089/repository/maven-snapshots/
 
-# JitPack
-./scripts/publish-jitpack.sh
+# JitPack (indica la versión explícitamente si el tag ya existe)
+./scripts/publish-jitpack.sh 1.0.2
 ```
 
 En Windows (PowerShell): `.\scripts\publish-local.ps1`, `.\scripts\publish-nexus.ps1`, `.\scripts\publish-jitpack.ps1` (mismos parámetros, sintaxis `-Nombre valor`).
+
+**JitPack — verificado end-to-end.** El build fue probado realmente contra el repositorio público `AdrianN17/ProyectoFinalLibreriaGT`, tag `v1.0.2` (los tags `v1.0.0`/`v1.0.1` quedaron rotos durante la depuración y no deben usarse). Estado del build: `https://jitpack.io/#AdrianN17/ProyectoFinalLibreriaGT/v1.0.2` (`status: ok`, 15 módulos publicados). Para que un consumidor use la librería vía JitPack:
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>com.github.AdrianN17</groupId>
+    <artifactId>ProyectoFinalLibreriaGT</artifactId>
+    <version>v1.0.2</version>
+</dependency>
+```
+
+Requisitos que tuvieron que resolverse para que el build de JitPack funcionara (ver `jitpack.yml` en la raíz del repositorio y el Maven Wrapper `andes-api-toolkit/mvnw`):
+- `jitpack.yml` fija `jdk: openjdk21` (JitPack usa Java 8 por defecto, incompatible con `instanceof` pattern matching / records usados en el código).
+- Se generó el Maven Wrapper (`mvnw`, `mvnw.cmd`, `.mvn/wrapper/`) porque JitPack lo requiere como mecanismo de build.
+- Todos los módulos de `examples/` declaran `<relativePath>../../pom.xml</relativePath>` en su `<parent>` para que la resolución del POM padre funcione en el entorno aislado de build de JitPack (localmente el reactor lo resuelve igual sin esa línea, pero JitPack no).
 
 ---
 
@@ -493,7 +535,7 @@ En Windows (PowerShell): `.\scripts\publish-local.ps1`, `.\scripts\publish-nexus
 
 - Faltan los documentos individuales sugeridos por la guía del curso (`ARCHITECTURE.md`, `GETTING_STARTED.md`, `SERVER.md`, `CLIENT.md`, `ERROR_HANDLING.md`, `CONFIGURATION.md`, `OPENAPI.md`, `VERSIONING.md`, `PUBLISHING.md`) — este README los consolida en un único documento por ahora.
 - No hay Spring REST Docs configurado (solo Javadoc + OpenAPI/Swagger UI autogenerado en `poc-server`/`poc-integration`).
-- La publicación a Nexus/JitPack fue verificada con `mvn deploy` real contra un repositorio de prueba local; publicar contra un Nexus corporativo o Maven Central real requiere credenciales que no se han configurado en este entorno académico.
+- La publicación fue **verificada de extremo a extremo**: JitPack (tag público `v1.0.2`, build `status: ok`, https://jitpack.io/#AdrianN17/ProyectoFinalLibreriaGT/v1.0.2) y un Nexus 3 real corriendo en Docker (`mvn deploy` real contra `http://localhost:8089`, 15 módulos confirmados vía API REST de Nexus). Publicar contra un Nexus corporativo en producción o Maven Central solo requiere cambiar las URLs/credenciales, no el mecanismo.
 - Falta la presentación (ppt/diagramas) para la sustentación.
 
 ---
