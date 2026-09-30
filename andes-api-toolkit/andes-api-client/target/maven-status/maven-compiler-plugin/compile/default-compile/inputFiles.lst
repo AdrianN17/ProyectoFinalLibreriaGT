@@ -1,7 +1,0 @@
-/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/andes-api-client/src/main/java/pe/andes/api/client/AndesApiClient.java
-/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/andes-api-client/src/main/java/pe/andes/api/client/AndesApiClientRegistry.java
-/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/andes-api-client/src/main/java/pe/andes/api/client/config/AndesClientProperties.java
-/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/andes-api-client/src/main/java/pe/andes/api/client/error/AndesClientErrorMapper.java
-/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/andes-api-client/src/main/java/pe/andes/api/client/web/AndesClientHeaderInterceptor.java
-/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/andes-api-client/src/main/java/pe/andes/api/client/web/AndesRestClientCustomizer.java
-/mnt/extra/proyectos/ProyectoFinalLibreriaGT/andes-api-toolkit/andes-api-client/src/main/java/pe/andes/api/client/web/AndesRestClientFactory.java
