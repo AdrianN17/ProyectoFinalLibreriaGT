@@ -15,38 +15,20 @@
     <packaging>jar</packaging>
 
     <name>PoC Integration</name>
-    <description>API-first: expone su propio contrato (contracts/openapi-integration.yaml, patron delegate) que internamente consume la Orders API externa (contracts/openapi-client-a.yaml, modelos generados) usando andes-api-client. Demuestra andes-api-server y andes-api-client trabajando juntos.
-        A diferencia de los demas PoC del reactor, este modulo consume las librerias andes-api-common/andes-api-server-spring-boot-starter/andes-api-client-spring-boot-starter
-        publicadas en JitPack (tag ${andes.jitpack.version}) en lugar de los modulos locales del reactor, para demostrar el consumo real de la libreria publicada.</description>
-
-    <properties>
-        <!-- Tag de JitPack a consumir (ver https://jitpack.io/#AdrianN17/ProyectoFinalLibreriaGT). Actualizar tras cada publish-jitpack.sh -->
-        <andes.jitpack.version>v1.0.2</andes.jitpack.version>
-        <andes.jitpack.groupId>com.github.AdrianN17.ProyectoFinalLibreriaGT</andes.jitpack.groupId>
-    </properties>
-
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
+    <description>API-first: expone su propio contrato (contracts/openapi-integration.yaml, patron delegate) que internamente consume la Orders API externa (contracts/openapi-client-a.yaml, modelos generados) usando andes-api-client. Demuestra andes-api-server y andes-api-client trabajando juntos.</description>
 
     <dependencies>
         <dependency>
-            <groupId>${andes.jitpack.groupId}</groupId>
+            <groupId>pe.andes.api</groupId>
             <artifactId>andes-api-common</artifactId>
-            <version>${andes.jitpack.version}</version>
         </dependency>
         <dependency>
-            <groupId>${andes.jitpack.groupId}</groupId>
+            <groupId>pe.andes.api</groupId>
             <artifactId>andes-api-server-spring-boot-starter</artifactId>
-            <version>${andes.jitpack.version}</version>
         </dependency>
         <dependency>
-            <groupId>${andes.jitpack.groupId}</groupId>
+            <groupId>pe.andes.api</groupId>
             <artifactId>andes-api-client-spring-boot-starter</artifactId>
-            <version>${andes.jitpack.version}</version>
         </dependency>
 
         <dependency>
