@@ -10,14 +10,14 @@
     -->
     <groupId>pe.andes.api</groupId>
     <artifactId>andes-api-bom</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.7</version>
     <packaging>pom</packaging>
 
     <name>Andes API BOM</name>
     <description>Bill of Materials centralizando las versiones de las librerias Andes API Toolkit.</description>
 
     <properties>
-        <andes.version>1.0.0</andes.version>
+        <andes.version>1.0.7</andes.version>
         <nexus.releases.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/releases</nexus.releases.url>
         <nexus.snapshots.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/snapshots</nexus.snapshots.url>
     </properties>
