@@ -45,12 +45,12 @@ SNAPSHOTS_URL="${2:-}"
 
 if [[ -z "${RELEASES_URL}" && -z "${SNAPSHOTS_URL}" ]]; then
   echo ">> Sin URLs explicitas: publicando en el repositorio LOCAL de prueba (.local-nexus-repo/)"
-  mvn -DskipTests clean deploy
+  mvn -DskipTests -Prelease clean deploy
 else
   echo ">> Publicando contra Nexus real:"
   echo "     releases:  ${RELEASES_URL}"
   echo "     snapshots: ${SNAPSHOTS_URL}"
-  mvn -DskipTests clean deploy \
+  mvn -DskipTests -Prelease clean deploy \
     -Dnexus.releases.url="${RELEASES_URL}" \
     -Dnexus.snapshots.url="${SNAPSHOTS_URL}"
 fi

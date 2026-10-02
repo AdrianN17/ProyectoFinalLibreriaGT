@@ -45,12 +45,12 @@ Set-Location $RootDir
 
 if ([string]::IsNullOrEmpty($ReleasesUrl) -and [string]::IsNullOrEmpty($SnapshotsUrl)) {
     Write-Host ">> Sin URLs explicitas: publicando en el repositorio LOCAL de prueba (.local-nexus-repo/)"
-    mvn -DskipTests clean deploy
+    mvn -DskipTests -Prelease clean deploy
 } else {
     Write-Host ">> Publicando contra Nexus real:"
     Write-Host "     releases:  $ReleasesUrl"
     Write-Host "     snapshots: $SnapshotsUrl"
-    mvn -DskipTests clean deploy "-Dnexus.releases.url=$ReleasesUrl" "-Dnexus.snapshots.url=$SnapshotsUrl"
+    mvn -DskipTests -Prelease clean deploy "-Dnexus.releases.url=$ReleasesUrl" "-Dnexus.snapshots.url=$SnapshotsUrl"
 }
 
 if ($LASTEXITCODE -ne 0) {

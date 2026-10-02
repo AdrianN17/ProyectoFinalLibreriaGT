@@ -10,14 +10,14 @@
     -->
     <groupId>pe.andes.api</groupId>
     <artifactId>andes-api-bom</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <name>Andes API BOM</name>
     <description>Bill of Materials centralizando las versiones de las librerias Andes API Toolkit.</description>
 
     <properties>
-        <andes.version>1.0.0-SNAPSHOT</andes.version>
+        <andes.version>1.0.0</andes.version>
     </properties>
 
     <distributionManagement>
