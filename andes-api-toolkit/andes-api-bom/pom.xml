@@ -18,18 +18,20 @@
 
     <properties>
         <andes.version>1.0.0</andes.version>
+        <nexus.releases.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/releases</nexus.releases.url>
+        <nexus.snapshots.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/snapshots</nexus.snapshots.url>
     </properties>
 
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Releases (local/corporativo)</name>
-            <url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/releases</url>
+            <url>${nexus.releases.url}</url>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <name>Nexus Snapshots (local/corporativo)</name>
-            <url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/snapshots</url>
+            <url>${nexus.snapshots.url}</url>
         </snapshotRepository>
     </distributionManagement>
 
