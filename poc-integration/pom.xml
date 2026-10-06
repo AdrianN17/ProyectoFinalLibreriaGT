@@ -19,8 +19,7 @@
         <spring-boot.version>4.1.1</spring-boot.version>
         <openapi-generator-maven-plugin.version>7.11.0</openapi-generator-maven-plugin.version>
         <swagger-annotations.version>2.2.22</swagger-annotations.version>
-        <!-- Rango abierto: Maven resuelve la ultima version publicada en Nexus. Sobreescribir con -Dandes.version=X para fijarla -->
-        <andes.version>[1.0.0,)</andes.version>
+        <andes.version>1.0.9</andes.version>
         <nexus.url>http://localhost:8089/repository/maven-public/</nexus.url>
     </properties>
 
