@@ -6,7 +6,7 @@
 
     <groupId>pe.andes.api</groupId>
     <artifactId>andes-api-toolkit</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <packaging>pom</packaging>
 
     <name>Andes API Toolkit</name>
@@ -31,13 +31,9 @@
         <module>andes-api-common</module>
         <module>andes-api-server</module>
         <module>andes-api-client</module>
-        <module>andes-api-server-spring-boot-starter</module>
-        <module>andes-api-client-spring-boot-starter</module>
         <!-- Librerias clasicas de Java puro (sin Spring), item 04 de la rubrica -->
         <module>andes-text-utils</module>
         <module>andes-id-generator</module>
-        <!-- Libreria de envoltura: expone andes-id-generator (estatica) como beans de Spring, item 05 -->
-        <module>andes-id-generator-spring-boot-starter</module>
     </modules>
 
     <properties>

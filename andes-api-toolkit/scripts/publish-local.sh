@@ -31,6 +31,6 @@ echo "Cualquier otro proyecto Maven en esta maquina ya puede depender de ellos, 
 echo
 echo "  <dependency>"
 echo "    <groupId>pe.andes.api</groupId>"
-echo "    <artifactId>andes-api-client-spring-boot-starter</artifactId>"
+echo "    <artifactId>andes-api-client</artifactId>"
 echo "    <version>1.0.0-SNAPSHOT</version>"
 echo "  </dependency>"

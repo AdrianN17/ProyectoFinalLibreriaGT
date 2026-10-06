@@ -8,15 +8,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="andes-text-utils" />
         <module name="andes-api-server" />
-        <module name="andes-api-server-spring-boot-starter" />
         <module name="andes-id-generator" />
-        <module name="andes-id-generator-spring-boot-starter" />
         <module name="andes-api-client" />
-        <module name="andes-api-client-spring-boot-starter" />
         <module name="andes-api-common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="andes-api-client-spring-boot-starter" target="21" />
+      <module name="andes-api-server-spring-boot-starter" target="21" />
+      <module name="andes-id-generator-spring-boot-starter" target="21" />
       <module name="poc-classic-libs" target="21" />
       <module name="poc-client" target="21" />
       <module name="poc-integration" target="21" />

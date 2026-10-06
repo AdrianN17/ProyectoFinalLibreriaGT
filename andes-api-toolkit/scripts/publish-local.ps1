@@ -38,6 +38,6 @@ Write-Host "Cualquier otro proyecto Maven en esta maquina ya puede depender de e
 Write-Host ""
 Write-Host "  <dependency>"
 Write-Host "    <groupId>pe.andes.api</groupId>"
-Write-Host "    <artifactId>andes-api-client-spring-boot-starter</artifactId>"
+Write-Host "    <artifactId>andes-api-client</artifactId>"
 Write-Host "    <version>1.0.0-SNAPSHOT</version>"
 Write-Host "  </dependency>"

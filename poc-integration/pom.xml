@@ -19,7 +19,7 @@
         <spring-boot.version>4.1.1</spring-boot.version>
         <openapi-generator-maven-plugin.version>7.11.0</openapi-generator-maven-plugin.version>
         <swagger-annotations.version>2.2.22</swagger-annotations.version>
-        <andes.version>1.0.9</andes.version>
+        <andes.version>1.0.10</andes.version>
         <nexus.url>http://localhost:8089/repository/maven-public/</nexus.url>
     </properties>
 
@@ -52,12 +52,12 @@
         </dependency>
         <dependency>
             <groupId>pe.andes.api</groupId>
-            <artifactId>andes-api-server-spring-boot-starter</artifactId>
+            <artifactId>andes-api-server</artifactId>
             <version>${andes.version}</version>
         </dependency>
         <dependency>
             <groupId>pe.andes.api</groupId>
-            <artifactId>andes-api-client-spring-boot-starter</artifactId>
+            <artifactId>andes-api-client</artifactId>
             <version>${andes.version}</version>
         </dependency>
 
@@ -68,7 +68,7 @@
         </dependency>
         <dependency>
             <groupId>pe.andes.api</groupId>
-            <artifactId>andes-id-generator-spring-boot-starter</artifactId>
+            <artifactId>andes-id-generator</artifactId>
             <version>${andes.version}</version>
         </dependency>
 

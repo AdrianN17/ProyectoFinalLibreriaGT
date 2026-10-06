@@ -10,14 +10,14 @@
     -->
     <groupId>pe.andes.api</groupId>
     <artifactId>andes-api-bom</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <packaging>pom</packaging>
 
     <name>Andes API BOM</name>
     <description>Bill of Materials centralizando las versiones de las librerias Andes API Toolkit.</description>
 
     <properties>
-        <andes.version>1.0.9</andes.version>
+        <andes.version>1.0.10</andes.version>
         <nexus.releases.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/releases</nexus.releases.url>
         <nexus.snapshots.url>file://${maven.multiModuleProjectDirectory}/.local-nexus-repo/snapshots</nexus.snapshots.url>
     </properties>
@@ -53,16 +53,6 @@
                 <artifactId>andes-api-client</artifactId>
                 <version>${andes.version}</version>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>andes-api-server-spring-boot-starter</artifactId>
-                <version>${andes.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>andes-api-client-spring-boot-starter</artifactId>
-                <version>${andes.version}</version>
-            </dependency>
             <!-- Librerias clasicas de Java puro -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
@@ -72,12 +62,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>andes-id-generator</artifactId>
-                <version>${andes.version}</version>
-            </dependency>
-            <!-- Libreria de envoltura -->
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>andes-id-generator-spring-boot-starter</artifactId>
                 <version>${andes.version}</version>
             </dependency>
         </dependencies>

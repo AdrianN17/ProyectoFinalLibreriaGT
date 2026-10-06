@@ -7,9 +7,36 @@
     <option name="selectedModelId" value="claude-sonnet-5.5" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ed839f-f7fe-4dc5-83db-2fa4d69e9fb1" name="Changes" comment="update project unified contract to release deploy">
+    <list default="true" id="d5ed839f-f7fe-4dc5-83db-2fa4d69e9fb1" name="Changes" comment="update library version poc">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-bom/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/andes-api-bom/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-client-spring-boot-starter/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-client-spring-boot-starter/src/main/java/pe/andes/api/client/autoconfigure/AndesApiClientAutoConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-client-spring-boot-starter/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-client-spring-boot-starter/src/test/java/pe/andes/api/client/autoconfigure/AndesApiClientAutoConfigurationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/andes-api-client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/andes-api-common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-server-spring-boot-starter/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-server-spring-boot-starter/src/main/java/pe/andes/api/server/autoconfigure/AndesApiServerAutoConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-server-spring-boot-starter/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-server-spring-boot-starter/src/test/java/pe/andes/api/server/autoconfigure/AndesApiServerAutoConfigurationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-api-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/andes-api-server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator-spring-boot-starter/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator-spring-boot-starter/src/main/java/pe/andes/lib/id/autoconfigure/AndesIdGeneratorAutoConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator-spring-boot-starter/src/main/java/pe/andes/lib/id/autoconfigure/IdGeneratorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator-spring-boot-starter/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator-spring-boot-starter/src/test/java/pe/andes/lib/id/autoconfigure/AndesIdGeneratorAutoConfigurationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator-spring-boot-starter/src/test/java/pe/andes/lib/id/autoconfigure/IdGeneratorServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/andes-id-generator/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/andes-text-utils/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/andes-text-utils/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/scripts/publish-local.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/scripts/publish-local.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/scripts/publish-local.sh" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/scripts/publish-local.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/poc-integration/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/poc-integration/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poc-integration/src/main/java/pe/andes/poc/integration/infrastructure/out/id/UlidExternalIdGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/poc-integration/src/main/java/pe/andes/poc/integration/infrastructure/out/id/UlidExternalIdGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,27 +87,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven. [-q,clean,generate-sources,-pl...].executor": "Run",
-    "Maven.andes-api-toolkit [clean].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.PocClientApplication.executor": "Run",
-    "Spring Boot.PocIntegrationApplication.executor": "Run",
-    "Spring Boot.PocServerApplication.executor": "Run",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "copilot.chat.legacySessionMetadata.migrated": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/mnt/extra/proyectos/ProyectoFinalLibreriaGT",
-    "node.js.detected.package.jshint": "true",
-    "node.js.selected.package.jshint": "",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven. [-q,clean,generate-sources,-pl...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.andes-api-toolkit [clean].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.PocClientApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PocIntegrationApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PocServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;copilot.chat.legacySessionMetadata.migrated&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/mnt/extra/proyectos/ProyectoFinalLibreriaGT&quot;,
+    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -155,7 +182,8 @@
     <MESSAGE value="update project" />
     <MESSAGE value="update project to release deploy" />
     <MESSAGE value="update project unified contract to release deploy" />
-    <option name="LAST_COMMIT_MESSAGE" value="update project unified contract to release deploy" />
+    <MESSAGE value="update library version poc" />
+    <option name="LAST_COMMIT_MESSAGE" value="update library version poc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
