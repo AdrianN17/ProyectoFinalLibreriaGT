@@ -7,7 +7,7 @@
     <!-- Agregador solo para JitPack: construye unicamente andes-api-toolkit. poc-integration es independiente. -->
     <groupId>pe.andes.api</groupId>
     <artifactId>andes-root</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>pom</packaging>
 
     <modules>

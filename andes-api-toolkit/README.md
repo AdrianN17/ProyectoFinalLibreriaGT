@@ -552,5 +552,5 @@ Apache License, Version 2.0 — ver [LICENSE](https://www.apache.org/licenses/LI
 ```bash
 cd ../poc-integration
 mvn spring-boot:run                      # última versión en Nexus
-mvn test -Dandes.version=1.0.8 -Dnexus.url=https://mi-nexus/repository/maven-public/
+mvn test -Dandes.version=1.0.9 -Dnexus.url=https://mi-nexus/repository/maven-public/
 ```
