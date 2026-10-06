@@ -1,9 +1,5 @@
 jdk:
   - openjdk21
-# El build "latest" de JitPack trae un Maven roto (falta plexus Launcher): se instala uno propio via SDKMAN.
-before_install:
-  - sdk install maven 3.9.9
-  - sdk use maven 3.9.9
+# Se usa el Maven del sistema (el wrapper falla en la imagen "latest" de JitPack); reintento por 429 transitorios de Maven Central.
 install:
-  - mvn -v
-  - mvn -B clean install -DskipTests
+  - mvn -B clean install -DskipTests || (sleep 45 && mvn -B clean install -DskipTests)
