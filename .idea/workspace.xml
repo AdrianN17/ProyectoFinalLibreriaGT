@@ -7,50 +7,7 @@
     <option name="selectedModelId" value="claude-sonnet-5.5" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5ed839f-f7fe-4dc5-83db-2fa4d69e9fb1" name="Changes" comment="update project to release deploy">
-      <change afterPath="$PROJECT_DIR$/mock_fraudcheck_server.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poc-integration/src/main/resources/openapi/openapi-creditcard.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/poc-integration/src/main/resources/openapi/openapi-fraudcheck.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/EJECUCION-COMPILACION-Y-PUBLICACION.md" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/EJECUCION-COMPILACION-Y-PUBLICACION.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/contracts/openapi-client-a.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/contracts/openapi-client-b.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/contracts/openapi-integration.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/contracts/openapi-server.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-classic-libs/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-classic-libs/src/main/java/pe/andes/poc/classiclibs/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/PocClientApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/orders/ExternalOrdersSimulatorController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/orders/OrderClientService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/main/java/pe/andes/poc/client/orders/OrdersDemoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/test/java/pe/andes/poc/client/inventory/InventoryModelCodegenTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/test/java/pe/andes/poc/client/orders/OrdersDemoControllerIT.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/poc-integration/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/java/pe/andes/poc/integration/PocIntegrationApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/poc-integration/src/main/java/pe/andes/poc/integration/PocIntegrationApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/java/pe/andes/poc/integration/orders/CheckoutApiDelegateImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/java/pe/andes/poc/integration/orders/CheckoutService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/java/pe/andes/poc/integration/orders/ExternalOrdersSimulatorController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/java/pe/andes/poc/integration/orders/OrdersRemoteService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/poc-integration/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/test/java/pe/andes/poc/integration/orders/CheckoutControllerIT.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/src/main/java/pe/andes/poc/server/PocServerApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/src/main/java/pe/andes/poc/server/customer/CustomerApiDelegateImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/src/main/java/pe/andes/poc/server/customer/CustomerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/src/test/java/pe/andes/poc/server/customer/CustomerControllerIT.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-wrapper-demo/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-wrapper-demo/src/main/java/pe/andes/poc/wrapperdemo/IdGeneratorDemoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-wrapper-demo/src/main/java/pe/andes/poc/wrapperdemo/PocWrapperDemoApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/examples/poc-wrapper-demo/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/andes-api-toolkit/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/andes-api-toolkit/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mock_apis.py" beforeDir="false" />
-    </list>
+    <list default="true" id="d5ed839f-f7fe-4dc5-83db-2fa4d69e9fb1" name="Changes" comment="update project unified contract to release deploy" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -194,7 +151,8 @@
     <MESSAGE value="remove targets" />
     <MESSAGE value="update project" />
     <MESSAGE value="update project to release deploy" />
-    <option name="LAST_COMMIT_MESSAGE" value="update project to release deploy" />
+    <MESSAGE value="update project unified contract to release deploy" />
+    <option name="LAST_COMMIT_MESSAGE" value="update project unified contract to release deploy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
