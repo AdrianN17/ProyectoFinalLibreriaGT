@@ -38,7 +38,7 @@ El objetivo no es un API Gateway ni un framework completo: es un conjunto de lib
 | `andes-id-generator-spring-boot-starter` | **Librería de envoltura** + autoconfigurable | Envuelve `andes-id-generator` (estático) en un bean `IdGeneratorService` inyectable, registrado vía `@AutoConfiguration` | `andes-id-generator`, `spring-boot-autoconfigure` |
 | `examples/poc-server` | PoC | Expone `contracts/openapi-server.yaml` (API-first, patrón delegate) | starter Server |
 | `examples/poc-client` | PoC | Consume `openapi-client-a.yaml` e `openapi-client-b.yaml` (modelos generados) | starter Client |
-| `examples/poc-integration` | PoC | Expone su propio contrato (`openapi-integration.yaml`) y consume una API externa internamente | starter Server + starter Client |
+| `../poc-integration` | PoC | Arquitectura hexagonal: expone `openapi-creditcard.yaml` y consume la API externa `openapi-fraudcheck.yaml` | starter Server + starter Client |
 | `examples/poc-classic-libs` | PoC (Java puro, **sin Spring**) | `main()` de consola que demuestra `andes-text-utils` + `andes-id-generator` | `andes-text-utils`, `andes-id-generator` |
 | `examples/poc-wrapper-demo` | PoC (Spring Boot) | Endpoint REST que usa `IdGeneratorService` inyectado por autoconfiguración | starter `andes-id-generator-spring-boot-starter` |
 
@@ -62,7 +62,7 @@ graph TD
 
     ServerStarter --> PocServer[examples/poc-server]
     ClientStarter --> PocClient[examples/poc-client]
-    ServerStarter --> PocIntegration[examples/poc-integration]
+    ServerStarter --> PocIntegration[../poc-integration]
     ClientStarter --> PocIntegration
 
     BOM -.gestiona versiones.-> Common
@@ -94,7 +94,6 @@ andes-api-toolkit/
 └── examples/
     ├── poc-server/
     ├── poc-client/
-    ├── poc-integration/
     ├── poc-classic-libs/                # PoC sin Spring de las librerías clásicas
     └── poc-wrapper-demo/                # PoC Spring Boot de la librería de envoltura
 ```
@@ -323,7 +322,7 @@ Como el generador y `PocServerApplication` comparten el mismo paquete base (`pe.
 
 Para `poc-client`, el plugin corre en modo **models-only** (`generateApis=false`) contra `openapi-client-a.yaml` y `openapi-client-b.yaml`, produciendo únicamente los DTOs (`Order`, `OrderItem`, `StockLevel`...) que luego se pasan como `Class<T>` a `AndesApiClient.get/post/...`. Cada aplicación consumidora genera su propia copia de los modelos del contrato compartido — es la práctica estándar de API-first para clientes.
 
-`poc-integration` expone su propio contrato (`openapi-integration.yaml`, patrón delegate, igual que 5.1) **y además** genera su propia copia de los modelos de `openapi-client-a.yaml` para la llamada saliente, mapeando explícitamente entre ambos contratos en `CheckoutService`.
+`poc-integration` (hexagonal: `domain` / `application` con puertos in/out / `infrastructure` con adaptadores) expone `openapi-creditcard.yaml` (patrón delegate, adaptador REST de entrada) y genera los modelos de `openapi-fraudcheck.yaml` para el adaptador de salida `FraudCheckClientAdapter`.
 
 ### 5.3 Caveat: response wrapping vs. envelope del contrato
 
@@ -382,7 +381,7 @@ mvn clean install
 |---|---|---|---|
 | `poc-server` | 8080 | `mvn -pl examples/poc-server spring-boot:run` | `contracts/openapi-server.yaml` |
 | `poc-client` | 8082 | `mvn -pl examples/poc-client spring-boot:run` | `contracts/openapi-client-a.yaml`, `-b.yaml` |
-| `poc-integration` | 8083 | `mvn -pl examples/poc-integration spring-boot:run` | `contracts/openapi-integration.yaml` + `-a.yaml` |
+| `poc-integration` | 8080 | `mvn -f ../poc-integration/pom.xml spring-boot:run` | `poc-integration/src/main/resources/openapi/` |
 
 ### 7.4 Endpoints de ejemplo
 
@@ -396,10 +395,10 @@ curl http://localhost:8080/api/v1/customers/1
 # poc-client: consumo de Orders (simulador local incluido)
 curl http://localhost:8082/api/v1/orders-demo/ORD-1
 
-# poc-integration: checkout propio -> Client Library -> Orders API (simulada)
-curl -X POST http://localhost:8083/api/v1/checkouts \
+# poc-integration: credit-cards -> caso de uso -> Fraud Check API (simulada)
+curl -X POST http://localhost:8080/api/v1/credit-cards \
   -H "Content-Type: application/json" \
-  -d '{"customerId":1,"items":[{"sku":"SKU-1","quantity":2,"unitPrice":10.0}]}'
+  -d '{"holderName":"Ada Lovelace","cardNumber":"4111111111111111","documentNumber":"12345678"}'
 ```
 
 Todas las respuestas siguen el envelope estándar:
@@ -422,7 +421,7 @@ Todas las respuestas siguen el envelope estándar:
 | `openapi-server.yaml` | API propia expuesta (Customers) | Respuestas ya incluyen el envelope Andes |
 | `openapi-client-a.yaml` | API externa (Orders) | Envelope propio del partner, distinto al de Andes — demuestra adaptación a contratos ajenos |
 | `openapi-client-b.yaml` | API externa (Inventory) | Paginación por cursor, estructura heterogénea respecto a Client A |
-| `openapi-integration.yaml` | API propia del PoC de integración (Checkout) | Reutiliza `ApiError`/`ApiMetadata` de `andes-api-common` vía `importMappings` |
+| `poc-integration/.../openapi-creditcard.yaml` | API propia del PoC de integración (Credit Cards) | Reutiliza `ApiError`/`ApiMetadata` de `andes-api-common` vía `importMappings` |
 
 ---
 
@@ -543,3 +542,15 @@ Requisitos que tuvieron que resolverse para que el build de JitPack funcionara (
 ## 13. Licencia
 
 Apache License, Version 2.0 — ver [LICENSE](https://www.apache.org/licenses/LICENSE-2.0.txt).
+
+---
+
+## PoC de integración (proyecto independiente)
+
+`../poc-integration` ya **no** es módulo del reactor, por lo que `mvn deploy`/JitPack nunca lo publican. Es un proyecto Maven autónomo (sin `<parent>`) que consume el toolkit desde Nexus (`andes.version` = `[1.0.0,)`, es decir la última versión publicada; repo `nexus.url`, por defecto `http://localhost:8089/repository/maven-public/`) y genera código desde `src/main/resources/openapi/`.
+
+```bash
+cd ../poc-integration
+mvn spring-boot:run                      # última versión en Nexus
+mvn test -Dandes.version=1.0.7 -Dnexus.url=https://mi-nexus/repository/maven-public/
+```

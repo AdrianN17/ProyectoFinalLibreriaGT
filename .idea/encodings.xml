@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$USER_HOME$/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/andes-api-client-spring-boot-starter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/andes-api-client-spring-boot-starter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/andes-api-client/src/main/java" charset="UTF-8" />
@@ -21,13 +23,13 @@
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-classic-libs/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-client/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-integration/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-wrapper-demo/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/examples/poc-wrapper-demo/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/andes-api-toolkit/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/poc-integration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/poc-integration/src/main/resources" charset="UTF-8" />
   </component>
 </project>

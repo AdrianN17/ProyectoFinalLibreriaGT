@@ -34,7 +34,7 @@ No es necesario compilar cada módulo manualmente. Maven usa el reactor multi-m�
 2. `andes-api-common`
 3. `andes-api-server` y `andes-api-client`
 4. `andes-api-server-spring-boot-starter` y `andes-api-client-spring-boot-starter`
-5. `examples/poc-server`, `examples/poc-client` y `examples/poc-integration`
+5. `examples/poc-server`, `examples/poc-client` y `../poc-integration`
 
 Los contratos OpenAPI ubicados en `contracts/` se utilizan durante la fase `generate-sources` de los módulos PoC. El código generado queda en `target/generated-sources/openapi` y no debe editarse manualmente.
 

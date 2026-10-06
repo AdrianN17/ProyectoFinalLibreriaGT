@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: poc-integration
+
+andes:
+  api:
+    server:
+      correlation:
+        enabled: true
+      response:
+        # The generated CreditCardsApi controller already returns the full Andes envelope
+        # (CreditCardEnvelope), so auto-wrapping must stay OFF here to avoid double-wrapping.
+        wrap-enabled: false
+      error-handling:
+        enabled: true
+      openapi:
+        enabled: true
+        title: Andes Integration PoC
+        description: Credit Card API that internally consumes the external Fraud Check API
+        version: 1.0.0
+    client:
+      clients:
+        fraud:
+          # El simulador local (poc.fraud-simulator.enabled) responde en el mismo puerto; para la API real: FRAUD_API_URL=http://localhost:9090
+          base-url: ${FRAUD_API_URL:http://localhost:8080}
+          connect-timeout: 2s
+          read-timeout: 5s
+
+logging:
+  level:
+    pe.andes: DEBUG

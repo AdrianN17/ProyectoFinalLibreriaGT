@@ -1,0 +1,9 @@
+target/
+.local-nexus-repo/
+*.class
+*.log
+.idea/
+*.iml
+.vscode/
+.DS_Store
+__pycache__/

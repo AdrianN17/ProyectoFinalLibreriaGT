@@ -38,11 +38,6 @@
         <module>andes-id-generator</module>
         <!-- Libreria de envoltura: expone andes-id-generator (estatica) como beans de Spring, item 05 -->
         <module>andes-id-generator-spring-boot-starter</module>
-        <module>examples/poc-server</module>
-        <module>examples/poc-client</module>
-        <module>examples/poc-integration</module>
-        <module>examples/poc-classic-libs</module>
-        <module>examples/poc-wrapper-demo</module>
     </modules>
 
     <properties>

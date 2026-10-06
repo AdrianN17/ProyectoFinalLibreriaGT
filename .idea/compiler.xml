@@ -7,20 +7,22 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="andes-text-utils" />
-        <module name="poc-classic-libs" />
         <module name="andes-api-server" />
         <module name="andes-api-server-spring-boot-starter" />
         <module name="andes-id-generator" />
         <module name="andes-id-generator-spring-boot-starter" />
         <module name="andes-api-client" />
-        <module name="poc-server" />
-        <module name="poc-integration" />
-        <module name="poc-client" />
         <module name="andes-api-client-spring-boot-starter" />
-        <module name="poc-wrapper-demo" />
         <module name="andes-api-common" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="poc-classic-libs" target="21" />
+      <module name="poc-client" target="21" />
+      <module name="poc-integration" target="21" />
+      <module name="poc-server" target="21" />
+      <module name="poc-wrapper-demo" target="21" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>pe.andes.poc</groupId>
+    <artifactId>poc-integration</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>PoC Integration</name>
+    <description>Hexagonal PoC: expone la Credit Card API (openapi-creditcard.yaml) y consume la Fraud Check API externa (openapi-fraudcheck.yaml) via andes-api-client.</description>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot.version>4.1.1</spring-boot.version>
+        <openapi-generator-maven-plugin.version>7.11.0</openapi-generator-maven-plugin.version>
+        <swagger-annotations.version>2.2.22</swagger-annotations.version>
+        <!-- Rango abierto: Maven resuelve la ultima version publicada en Nexus. Sobreescribir con -Dandes.version=X para fijarla -->
+        <andes.version>[1.0.0,)</andes.version>
+        <nexus.url>http://localhost:8089/repository/maven-public/</nexus.url>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>nexus-releases</id>
+            <url>${nexus.url}</url>
+            <releases><enabled>true</enabled><updatePolicy>always</updatePolicy></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-api-common</artifactId>
+            <version>${andes.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-api-server-spring-boot-starter</artifactId>
+            <version>${andes.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-api-client-spring-boot-starter</artifactId>
+            <version>${andes.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-text-utils</artifactId>
+            <version>${andes.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>pe.andes.api</groupId>
+            <artifactId>andes-id-generator-spring-boot-starter</artifactId>
+            <version>${andes.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Required at compile time by the code generated from contracts/openapi-creditcard.yaml -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>poc-integration</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-creditcard-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/openapi-creditcard.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <output>target/generated-sources/openapi</output>
+                            <apiPackage>pe.andes.poc.integration.generated.api</apiPackage>
+                            <modelPackage>pe.andes.poc.integration.generated.model</modelPackage>
+                            <invokerPackage>pe.andes.poc.integration.generated</invokerPackage>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <!-- ApiError/ApiErrorDetail/ApiMetadata are hand-written in andes-api-common;
+                                 importMappings redirects generated code to those classes, and modelsToGenerate
+                                 stops the generator from also emitting its own (conflicting) copies. -->
+                            <modelsToGenerate>CreateCreditCardRequest,CreditCard,CreditCardEnvelope,ErrorEnvelope</modelsToGenerate>
+                            <!-- Skip the generator's own Application/HomeController/test/POM supporting files:
+                                 poc-integration already has its own PocIntegrationApplication main class. -->
+                            <supportingFilesToGenerate>ApiUtil.java,RFC3339DateFormat.java,openapi.yaml</supportingFilesToGenerate>
+                            <importMappings>
+                                <importMapping>ApiError=pe.andes.api.common.model.ApiError</importMapping>
+                                <importMapping>ApiErrorDetail=pe.andes.api.common.model.ApiErrorDetail</importMapping>
+                                <importMapping>ApiMetadata=pe.andes.api.common.model.ApiMetadata</importMapping>
+                            </importMappings>
+                            <configOptions>
+                                <interfaceOnly>false</interfaceOnly>
+                                <delegatePattern>true</delegatePattern>
+                                <useTags>true</useTags>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <openApiNullable>false</openApiNullable>
+                                <documentationProvider>none</documentationProvider>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-fraud-models</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi/openapi-fraudcheck.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <output>target/generated-sources/openapi</output>
+                            <generateApis>false</generateApis>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateModelDocumentation>false</generateModelDocumentation>
+                            <modelPackage>pe.andes.poc.integration.generated.fraud.model</modelPackage>
+                            <apiPackage>pe.andes.poc.integration.generated.fraud.api</apiPackage>
+                            <invokerPackage>pe.andes.poc.integration.generated.fraud</invokerPackage>
+                            <configOptions>
+                                <useBeanValidation>false</useBeanValidation>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <openApiNullable>false</openApiNullable>
+                                <documentationProvider>none</documentationProvider>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
