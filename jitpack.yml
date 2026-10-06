@@ -1,2 +1,5 @@
 jdk:
   - openjdk21
+# Solo se publica el toolkit; poc-integration (proyecto independiente) queda fuera.
+install:
+  - cd andes-api-toolkit && chmod +x mvnw && ./mvnw -B clean install -DskipTests
